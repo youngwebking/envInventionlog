@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block extrahead %}
+{% endblock %}
+{% block content %}
+   <div id="employeelist" class="container left">
+      <ul id="employee-cats">
+		   <li><p><a href="/employees/managers" >Managers</a></p></li>
+		   <li><a href="/employees/pms" ><p>Production Managers</p></a></li>
+		   <li><a href="/employees/draftsmen"><p>Draftsmen</p></a></li>
+		   <li><a href="/employees/builders"><p>Builders</p></a></li>
+		</ul>
+   </div>
+{% endblock %}

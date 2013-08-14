@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block extrahead %}
+<link rel="stylesheet" type="text/css" href="/static/css/form.css">
+{% endblock %}
+{% block content %}
+<form class="form-container" action="" method="post" enctype="multipart/form-data">
+<h3>Upload Model Images for {{ project }} project</h3>
+{% csrf_token %}
+	<p>{% if form.errors %}{% endif %}</p>
+	<ol>
+		<li><p {% if form.topView.errors %}class="error"{% endif %}>Top View File: {{ form.topView }} {{ form.topView.errors }}</p></li>
+		
+		<li><p {% if form.rightView.errors %}class="error"{% endif %}>Right View: {{ form.rightView }} {{ form.rightView.errors }}</p></li>
+		
+		<li><p {% if form.frontView.errors %}class="error"{% endif %}>Front View: {{ form.frontView }} {{ form.frontView.errors }}</p></li>
+		<br />
+		
+		<li><input type="submit" value="Submit!" class="btn btn-large btn-primary"></li>
+	</ol>
+</form>
+{% endblock %}

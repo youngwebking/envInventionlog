@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block extrahead %}
+{% endblock %}
+{% block content %}
+   <div id="employeelist" class="container left">
+      {% for builder in builders %}
+         <p><a href="/employees/builders/{{ builder.slug }}">{{ builder }}</a></p>
+      {% endfor %}
+   </div>
+{% endblock %}

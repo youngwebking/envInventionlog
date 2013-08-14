@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block extrahead %}
+{% endblock %}
+{% block content %}
+   <div id="singleemployee" class="container">
+      <p>Name: {{ draftsman }}</p>
+      <p>Job: {{ draftsman.get_job_display }}</p>
+      <p>Current projects:<ol class="">
+      	{% for project in projects %}<li><a href="/projects/{{ project.slug }}">{{ project }}</a></li>{% endfor %}
+      </ol></p>
+      <p>Production Manager in charge: {% if project.productionManager != None %}<a href="/employees/production-managers/{{ project.productionManager.slug }}">{{ project.roductionManager }}</a>{% else %}None{% endif %}</p>
+      <!--<p>Job Description: {{ draftsman.description }}</p>-->
+   </div>
+{% endblock %}

@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+   <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/characters/">View the characters!</a></li>
+   </ul>
+{% endblock %}

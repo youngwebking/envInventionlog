@@ -1,0 +1,37 @@
+from django.contrib import admin
+from employee.models import Employee
+from employee.models import Manager
+from employee.models import ProductionManager
+from employee.models import Draftsman
+from employee.models import Builder
+
+class EmployeeAdmin(admin.ModelAdmin):
+	prepopulated_fields = {'slug': ('name',)}
+	list_display = ('name', 'job',)
+	search_fields = ['name', 'job']
+
+class ManagerAdmin(admin.ModelAdmin):
+	#prepopulated_fields = {'slug': ('name',)}
+	list_display = ('name', 'assigned',)
+	search_fields = ['name']
+
+class PMAdmin(admin.ModelAdmin):
+	#prepopulated_fields = {'slug': ('name',)}
+	list_display = ('name', 'assigned',)
+	search_fields = ['name']
+	
+class DraftsmenAdmin(admin.ModelAdmin):
+	#prepopulated_fields = {'slug': ('name',)}
+	list_display = ('name',)
+	search_fields = ['name']
+	
+class BuildersAdmin(admin.ModelAdmin):
+	#prepopulated_fields = {'slug': ('name',)}
+	list_display = ('name',)
+	search_fields = ['name']
+
+admin.site.register(Employee, EmployeeAdmin)
+admin.site.register(Manager, ManagerAdmin)
+admin.site.register(ProductionManager, PMAdmin)
+admin.site.register(Draftsman, DraftsmenAdmin)
+admin.site.register(Builder, BuildersAdmin)

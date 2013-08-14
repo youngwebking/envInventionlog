@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block extrahead %}
+	<link rel="stylesheet", type="text/css", href="/static/css/form.css">
+{% endblock %}
+{% block content %}
+<div class="container">
+	<h1>Welcome to your profile, {{ user.username }}</h1>
+	<!--{#% if user.employee.job == 'P' OR user.employee.job == 'D' OR user.employee.job == 'T' OR user.employee.job == 'B' %}-->
+	{% if user.employee.job == 'D'%}
+	<p>Your current projects:
+		<ol class="center">
+      	{% for project in projects %}
+      		<li><a href="/projects/{{ project.slug }}">{{ project }}</a></li>
+      	{% endfor %}
+      </ol>
+	</p>
+	<!--<form enctype="multipart/form-data">
+		{{ uploadform.draftImage1 }}
+		<br />
+		<input class='btn' type="submit" value='Post' name='action'>
+	</form>-->
+	{% endif %}
+</div>
+
+{% endblock %}

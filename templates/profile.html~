@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block extrahead %}
+{% endblock %}
+{% block content %}
+<div class="container">
+	<h1>Welcome to your profile, {{ user.name }}</h1>
+</div>
+
+{% endblock %}

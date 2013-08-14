@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block extrahead %}
+{% endblock %}
+{% block content %}
+	<div class="container">
+		<h1>404</h1>
+		<h2>We're sorry, but the page you requested is not available.</h2>
+		{% if messages %}
+			<ul class="messages">
+				 {% for message in messages %}
+				 <li>{{ message }}</li>
+				 {% endfor %}
+			</ul>
+		{% endif %}
+	</div>
+{% endblock %}

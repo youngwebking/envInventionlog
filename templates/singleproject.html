@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block extrahead %}
+{% endblock %}
+{% block content %}
+   <div id="singleproject" class="container left">
+      <h3>{{ project }}: {{ project.percent_complete }}% Complete</h3>
+      <p>Status: {{ project.get_status_display }}!</p>
+
+      <p>Production Manager in charge: {% if project.productionManager != None %}<a href="/employees/production-managers/{{ project.productionManager.slug }}">{{ project.roductionManager }}</a>{% else %}None{% endif %}</p>
+      <p>Project draftsman: {% if project.draftsman != None %}<a href="/employees/draftsmen/{{ project.draftsman.slug }}">{{ project.draftsman }}</a>{% else %}None{% endif %}</p>
+      <p>Project machine technician: {% if project.machineTech != None %}<a href="/employees/machine-technicians/{{ project.machineTech.slug }}">{{ project.machineTech }}</a>{% else %}None{% endif %}</p>
+      <p>Project model builder: {% if project.modelBuilder != None %}<a href="/employees/model-builders/{{ project.modelBuilder.slug }}">{{ project.modelBuilder }}</a>{% else %}None{% endif %}</p>
+      <p>Patent Image: {% if project.patentImage1.url != None %}<a href="{{ project.patentImage1.url }}">{{ project.patentImage1.url }}</a>{% else %}None{% endif %}</p>
+      <p>Stl File: {% if project.stl != None %}<a href="{{ project.stl.stl.url }}">download</a>{% else %}None{% endif %}</p>
+      <p>Dxf File: {% if project.dxf != None %}<a href="{{ project.dxf.dxf.url }}">download</a>{% else %}None{% endif %}</p>
+      
+      <p>Model Top View: {% if project.modelImgTop.image.url != None %}<a href="{{ project.modelImgTop.image.url }}"><br /><img height="100px" src="{{ project.modelImgTop.image.url }}" /></a>{% else %}None{% endif %}</p>
+      
+      <p>Model Right View: {% if project.modelImgRight.image.url != None %}<a href="{{ project.modelImgRight.image.url }}"><br /><img height="100px" src="{{ project.modelImgRight.image.url }}" /></a>{% else %}None{% endif %}</p>
+      
+      <p>Model Front View: {% if project.modelImgFront.image.url != None %}<a href="{{ project.modelImgFront.image.url }}"><br /><img height="100px" src="{{ project.modelImgFront.image.url }}" /></a>{% else %}None{% endif %}</p>
+      
+      {% if project.draftsman.name == user.username %}
+      	<form enctype="multipart/form-data">
+				<br />
+				<p>Upload Drafts</p>
+				<a href="/projects/draft-upload/{{ project.slug }}/">Upload Drafts</a>
+			</form>
+      {% elif project.machineTech.name == user.username %}
+      	<form enctype="multipart/form-data">
+				<br />
+				<p>Upload Prototype Pictures</p>
+				<a href="/projects/prototype-upload/{{ project.slug }}">Upload Prototype Pictures</a>
+			</form>
+      {% elif project.modelBuilder.name == user.username %}
+      	<form enctype="multipart/form-data">
+				<br />
+				<p>Upload Model Pictures</p>
+				<a href="/projects/model-upload/{{ project.slug }}">Upload Model Pictures</a>
+			</form>
+      {% endif %}
+   </div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+	<h1>Terms of Agreement</h1>
+	<br />
+
+	<h3>Wishing Light Operating Instructions</h3>
+	<br />
+
+	<p>1: After the distribution of fuel to packaging equipment Kong Cross wire in the side of the field again deduction presses The fuel-pressure lock firmly.</p>
+	<br />
+	<p>2: A person wishing light take ip a Top;
+	Another person fuel ignited the four angle.</p>
+	<br />
+	<p>3: Wait for that the heat enough light, lantems person lets loose A top hand, changes grips under the light to encircle. Has when the lifting force may let go releases for flying.</p>
+	<br />
+	<p>4: Wishing light rose slowly the sky, do not forget Wishing oh---------</p>
+	<br />
+
+	<h3>Notice item:</h3>
+	<br />
+
+	<p>1: Should choose at the option open, calm environment released for flight. No fire ban in areas, the tall building the floor, and so on have covers under the thing to release for flight, must leave outside the airport 10 kilometers from flying.</p>
+	<br />
+	<p>2: Wishing light can only be used for the distribution the special-purpose fuel,prohibited by any burning Replace.</p>
+	<br />
+	<p>3: Wishing light are on the rise, that of the flying, cannot the long time not put, and the Flight not to be append the foreign body.</p>
+	<br />
+	<p>4: Children must be under the custody of the adults use.</p>
+	<br />
+
+	<h3>Wishing Light light</h3>
+	<br />
+
+	<p>Declaration: Wishing light for the fire flying,because of environmental ingredient suchas improper use of security incidents caused by the release of the commitment. Production enterprisies, vendors,transport operators,without any responsibility. You use both, then you understand and accept on behalf of the declaration.*</p>
+	<br />
+	<p>Thumbs up to you if you actually read this. We hope you enjoyed yourself!</p>
+	<br />
+	<sub id="disclaimer">*This text was taken from the instructions for a Chinese wishing light.</sub>
+</div>
+{% endblock %}

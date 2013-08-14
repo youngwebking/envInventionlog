@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block extrahead %}
+{% endblock %}
+{% block content %}
+   <div id="employeelist" class="container left">
+      {% for pm in pms %}
+         <p><a href="/employees/pms/{{ pm.slug }}">{{ pm }}</a></p>
+      {% endfor %}
+   </div>
+{% endblock %}

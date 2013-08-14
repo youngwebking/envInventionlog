@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+   <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/characters/">View the characters!</a></li>
+   </ul>
+   <div id="characterslist">
+      {% for character in characters %}
+         {{ character }}
+      {% endfor %}
+   </div>
+{% endblock %}

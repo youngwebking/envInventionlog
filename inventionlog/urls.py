@@ -1,0 +1,44 @@
+from django.conf.urls import patterns, include, url
+from django.conf import settings
+from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
+# Uncomment the next two lines to enable the admin:
+from django.contrib import admin
+admin.autodiscover()
+
+urlpatterns = patterns('',
+    # Examples:
+    # url(r'^$', 'inventionlog.views.home', name='home'),
+    # url(r'^inventionlog/', include('inventionlog.foo.urls')),
+
+    # Uncomment the admin/doc line below to enable admin documentation:
+    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+
+    # Uncomment the next line to enable the admin:
+   url(r'^admin/', include(admin.site.urls)),
+   (r'^static/(?P<path>.*)$', 'django.views.static.serve',
+ 	{'document_root': settings.MEDIA_ROOT}),
+   (r'^$', 'static_pages.views.index'),
+   (r'^terms/$', 'static_pages.views.terms'),
+   (r'^help/$', 'static_pages.views.help'),
+   (r'^employees/$', 'static_pages.views.EmployeesAll'),
+   (r'^employees/upper-management/$', 'employee.views.ManagersAll'),
+   (r'^employees/upper-management/(?P<managerslug>.*)/$', 'employee.views.SpecificManager'),
+   (r'^employees/production-managers/$', 'employee.views.PMsAll'),
+	(r'^employees/production-managers/(?P<pmslug>.*)/$', 'employee.views.SpecificPM'),
+	(r'^employees/draftsmen/$', 'employee.views.DraftsmenAll'),
+	(r'^employees/draftsmen/(?P<draftsmanslug>.*)/$', 'employee.views.SpecificDraftsman'),
+	(r'^employees/machine-technicians/$', 'employee.views.MTsAll'),
+	(r'^employees/machine-technicians/(?P<mtslug>.*)/$', 'employee.views.SpecificMT'),
+	(r'^employees/model-builders/$', 'employee.views.MBsAll'),
+	(r'^employees/model-builders/(?P<mbslug>.*)/$', 'employee.views.SpecificMB'),
+	(r'^projects/$', 'project.views.ProjectsAll'),
+	(r'^projects/draft-upload/(?P<projectslug>.*)/$', 'project.views.upload_draft'),
+	(r'^projects/model-upload/(?P<projectslug>.*)/$', 'project.views.upload_model'),
+	(r'^projects/(?P<projectslug>.*)/$', 'project.views.SpecificProject'),
+	(r'^register/$', 'employee.views.EmployeeRegistration'),
+	(r'^login/$', 'employee.views.LoginRequest'),
+	(r'^logout/$', 'employee.views.LogoutRequest'),
+	(r'^profile/$', 'employee.views.Profile'),
+) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

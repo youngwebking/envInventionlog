@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block extrahead %}
+{% endblock %}
+{% block content %}
+   <div id="singleemployee" class="container left">
+      <p>Name: {{ builder }}</p>
+      <p>Job: {{ builder.get_job_display }}</p>
+      <p>Job Description: {{ builder.description }}</p>
+   </div>
+{% endblock %}

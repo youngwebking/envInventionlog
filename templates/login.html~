@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block extrahead %}
+<link rel="stylesheet" type="text/css" href="/static/css/davison/form.css">
+{% endblock %}
+{% block content %}
+<form class="form-container left" action="" method="post">
+	{% csrf_token %}
+	{% if form.errors %}<p>Please correct the following fields:</p>{% endif %}
+	<ol>
+	<li><div class="register_div left">
+		{% if form.name.errors %}<p class="error">{{ form.name.errors }}</p>{% endif %}
+		<p><label for="name"{% if form.name.errors %} class="error"{% endif %}>Name:</label></p>
+		<p>{{ form.name }}</p>
+	</div></li>
+	
+	<!--<li><div class="register_div left">
+		{% if form.username.errors %}<p class="error">{{ form.username.errors }}</p>{% endif %}
+		<p><label for="username"{% if form.username.errors %} class="error"{% endif %}>Username:</label></p>
+		<p>{{ form.username }}</p>
+	</div></li>-->
+
+	<!--<li><div class="register_div left">
+		{% if form.question.errors %}<p class="error">{{ form.question.errors }}</p>{% endif %}
+		<p><label for="question"{% if form.question.errors %} class="error"{% endif %}>Security Question:</label></p>
+		<p>{{ form.question }}</p>
+	</div></li>-->
+	
+	<li><div class="register_div left">
+		{% if form.answer.errors %}<p class="error">{{ form.answer.errors }}</p>{% endif %}
+		<p><label for="answer"{% if form.answer.errors %} class="error"{% endif %}>Answer:</label></p>
+		<p>{{ form.answer }}</p>
+	</div></li>
+	
+	<li><p><input type="submit" value="Login!" class="btn btn-large btn-primary"></p></li>
+	</ol>
+</form>
+{% endblock %}

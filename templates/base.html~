@@ -1,0 +1,50 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="/static/css/davison/main.css"/>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+	{% block extrahead %}
+	{% endblock %}
+</head>
+<body>
+<header>
+	<div id="navbar">
+		<ul id="nav-logo">
+			<li><a href="/"><img src="/static/img/davison/inventionland_logo.png" id="logo"/></a></li>
+			<li><a href="/" id="logo-text">INVENTIONLAND</a></li>
+		</ul>
+		<ul id="nav-links">
+		   <li><a href="/"><p class="nav-button">Home</p></a></li>
+		   <li><a href="/employees/managers" ><p class="nav-button">Managers</p></a></li>
+		   <li><a href="/employees/pms" ><p class="nav-button">Production Managers</p></a></li>
+		   <li><a href="/employees/draftsmen"><p class="nav-button">Draftsmen</p></a></li>
+		   <li><a href="/employees/builders"><p class="nav-button">Builders</p></a></li>
+		</ul>
+		<ul id="login-links">
+			{% if user.is_authenticated %}
+				<li><a href="/profile"><p class="nav-button">Profile</p></a></li>
+				<li><a href="/logout"><p class="nav-button">Logout</p></a></li>
+			{% else %}
+		   	<li><a href="/login"><p class="nav-button">Login</p></a></li>
+		   	<li><a href="/register"><p class="nav-button">Register</p></a></li>
+		   {% endif %}
+		</ul>
+	</div>
+</header>
+<div id="container" class="center">
+	{% block content %}
+	{% endblock %}
+</div>
+<footer>
+	<!--<ul id="nav-links">
+		<li><a href="/"><img src="/static/img/davison/davison_logo.png" id="logo"/></a></li>
+		<li class="padding-right"><a href="/">Home</a></li>|
+		<li class="padding-right"><a href="/employees/pms">Project Managers</a></li>
+	</ul>
+	<ul id="login-links">
+		<li class="padding-right"><a href="#">Login</a></li>|
+		<li><a href="#">Register</a></li>
+	</ul>-->
+</footer>
+</div>
+</body>
+</html>

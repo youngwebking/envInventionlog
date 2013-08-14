@@ -1,0 +1,149 @@
+from django.shortcuts import render_to_response
+from django.template import RequestContext
+from django.http import HttpResponseRedirect
+from django.contrib.auth.models import User
+from employee.forms import RegistrationForm, LoginForm
+from django.contrib.auth import authenticate, login, logout
+from django.template.defaultfilters import slugify
+from employee.models import Employee
+from employee.models import Manager
+from employee.models import ProductionManager
+from employee.models import Draftsman
+from employee.models import Builder
+
+# REGISTERING -------------------------------------------
+def EmployeeRegistration(request):
+	if request.user.is_authenticated():
+		return HttpResponseRedirect("/profile/")
+	if request.method == 'POST':
+		form = RegistrationForm(request.POST)
+		if form.is_valid():
+			user = User.objects.create_user(username=form.cleaned_data['name'], email=form.cleaned_data['email'], password=form.cleaned_data['answer'])
+			user.save()
+			#employee = user.get_profile()
+			#employee.name = form.cleaned_data['name']
+			#employee.question = form.cleaned_data['question']
+			#employee.answer = form.cleaned_data['answer']
+			#employee.job = form.cleaned_data['job']
+			#employee.save()
+			
+			#employee = Employee(user=user, name=form.cleaned_data['name'], question=form.cleaned_data['question'], answer=form.cleaned_data['answer'], job=form.cleaned_data['job'])
+			if form.cleaned_data['job'] == 'M':
+				employee = Manager(user=user, name=form.cleaned_data['name'], question=form.cleaned_data['question'], answer=form.cleaned_data['answer'], job=form.cleaned_data['job'])
+			elif form.cleaned_data['job'] == 'P':
+				employee = ProductionManager(user=user, name=form.cleaned_data['name'], question=form.cleaned_data['question'], answer=form.cleaned_data['answer'], job=form.cleaned_data['job'])
+			elif form.cleaned_data['job'] == 'D':
+				employee = Draftsman(user=user, name=form.cleaned_data['name'], question=form.cleaned_data['question'], answer=form.cleaned_data['answer'], job=form.cleaned_data['job'])
+			elif form.cleaned_data['job'] == 'B':
+				employee = Builder(user=user, name=form.cleaned_data['name'], question=form.cleaned_data['question'], answer=form.cleaned_data['answer'], job=form.cleaned_data['job'])
+			name = form.cleaned_data['name']
+			answer = form.cleaned_data['answer']
+			employee.slug = slugify(name)
+			employee.save()
+			employee = authenticate(username=name, password=answer)
+			if employee is not None:
+				login(request, employee)
+				if employee.is_authenticated:
+					return HttpResponseRedirect('/profile/')
+		else:
+			return render_to_response('register.html', {'form': form}, context_instance=RequestContext(request))
+	else:
+		""" user is not submitting the form, show them a blank registration form """
+		form = RegistrationForm()
+		context = {'form': form}
+		return render_to_response('register.html', context, context_instance=RequestContext(request))
+# LOGGING IN-------------------------------------------		
+def LoginRequest(request):
+	if request.user.is_authenticated():
+		return HttpResponseRedirect('/profile/')
+	if request.method == 'POST':
+		form = LoginForm(request.POST)
+		if form.is_valid():
+			name = form.cleaned_data['name']
+			answer = form.cleaned_data['answer']
+			employee = authenticate(username=name, password=answer)
+			if employee is not None:
+				login(request, employee)
+				if employee.is_authenticated:
+					return HttpResponseRedirect('/profile/')
+			else:
+				return render_to_response('login.html', {'form': form}, context_instance=RequestContext(request))
+		else:
+			return render_to_response('login.html', {'form': form}, context_instance=RequestContext(request))
+	else:
+		""" user is not submitting the form, show the login form """
+		form = LoginForm()
+		context = {'form': form}
+		return render_to_response('login.html', context, context_instance=RequestContext(request))
+	
+# LOGGING OUT------------------------------------------------	
+def LogoutRequest(request):
+	logout(request)
+	return HttpResponseRedirect('/')
+
+# PROFILE PAGE--------------------------------------------
+def Profile(request):
+	context = None
+	return render_to_response('profile.html', context, context_instance=RequestContext(request))
+	#return render_to_response('profile.html')
+
+#MANAGER---------------------------------------------------------
+def ManagersAll(request):
+	#pms = Employee.objects.filter(job='P').order_by('name')
+	managers = Manager.objects.all()
+	context = {'managers': managers}
+	return render_to_response('../templates/managersall.html', context, context_instance=RequestContext(request))
+	
+def SpecificManager(request, pmslug):
+	#pms = Employee.objects.filter(job='P')
+	manager = Manager.objects.get(slug=managerslug)
+	context = {'manager': manager}
+	return render_to_response('singlemanager.html', context, context_instance=RequestContext(request))
+
+# PRODUCTION MANAGER---------------------------------------------------------
+def PMsAll(request):
+	#pms = Employee.objects.filter(job='P').order_by('name')
+	pms = ProductionManager.objects.all()
+	context = {'pms': pms}
+	return render_to_response('../templates/pmsall.html', context, context_instance=RequestContext(request))
+	
+def SpecificPM(request, pmslug):
+	#pms = Employee.objects.filter(job='P')
+	pm = ProductionManager.objects.get(slug=pmslug)
+	context = {'pm': pm}
+	return render_to_response('singlepm.html', context, context_instance=RequestContext(request))
+
+# DRAFTSMEN -----------------------------------------------------------------
+def DraftsmenAll(request):
+	#draftsmen = Employee.objects.filter(job='D').order_by('name')
+	draftsmen = Draftsman.objects.all()
+	context = {'draftsmen': draftsmen}
+	return render_to_response('../templates/draftsmenall.html', context, context_instance=RequestContext(request))
+	
+def SpecificDraftsman(request, draftsmanslug):
+	draftsman = Draftsman.objects.get(slug=draftsmanslug)
+	context = {'draftsman': draftsman}
+	return render_to_response('singledraftsman.html', context, context_instance=RequestContext(request))
+	
+# BUILDERS ------------------------------------------------------------------
+def BuildersAll(request):
+	#builders = Employee.objects.filter(job='B').order_by('name')
+	builders = Builder.objects.all()
+	context = {'builders': builders}
+	return render_to_response('../templates/buildersall.html', context, context_instance=RequestContext(request))
+	
+def SpecificBuilder(request, builderslug):
+	builder = Builder.objects.get(slug=builderslug)
+	context = {'builder': builder}
+	return render_to_response('singlebuilder.html', context, context_instance=RequestContext(request))
+	
+	
+
+
+
+
+
+
+	
+	
+	

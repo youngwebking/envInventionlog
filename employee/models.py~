@@ -1,0 +1,71 @@
+from django.db import models
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+
+
+JOB_CHOICES = (
+	('M', 'Manager'),
+	('P', 'Production Manager'),
+	('D', 'Draftsman'),
+	('B', 'Builder'),
+)
+
+class Employee(models.Model):
+	user = models.OneToOneField(User)
+	name = models.CharField(max_length=50, unique=True)
+	slug = models.SlugField(blank=True)
+	job = models.CharField(max_length=1, choices=JOB_CHOICES)
+	
+	#if job == 'P':
+	#	job = models.ForeignKey('ProductionManager')
+	#elif job == 'D':
+	#	job = models.ForeignKey('Draftsman')
+	#elif job == 'B':
+	#	job = models.ForeignKey('Builder')
+	question = models.CharField(max_length=200)
+	answer = models.CharField(max_length=50)
+	
+	def __unicode__(self):
+		return self.name
+		
+# create our user object to attach to our player object
+#def create_employee_user_callback(sender, instance, **kwargs):
+#	employee, new = Employee.objects.get_or_create(user=instance)
+#post_save.connect(create_employee_user_callback, User)
+
+class Manager(Employee):
+	assigned = models.CharField(max_length=1, choices=ASSN_CHOICES)
+	description = models.TextField(blank=True)
+	
+	#def approve(project):
+		#project.draft.approved = True
+	
+	def __unicode__(self):
+		return self.name
+
+ASSN_CHOICES = (
+	('D', 'Draftsman'),
+	('B', 'Builder'),
+)
+
+class ProductionManager(Employee):
+	assigned = models.CharField(max_length=1, choices=ASSN_CHOICES)
+	description = models.TextField(blank=True)
+	
+	#def approve(project):
+		#project.draft.approved = True
+	
+	def __unicode__(self):
+		return self.name
+		
+class Draftsman(Employee):
+	description = models.TextField(blank=True)
+	
+	def __unicode__(self):
+		return self.name
+		
+class Builder(Employee):
+	description = models.TextField(blank=True)
+	
+	def __unicode__(self):
+		return self.name

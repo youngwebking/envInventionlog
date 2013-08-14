@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block extrahead %}
+<link rel="stylesheet" type="text/css" href="/static/css/form.css">
+{% endblock %}
+{% block content %}
+<form class="form-container" action="" method="post" enctype="multipart/form-data">
+<h3>Upload Draft for {{ project }} project</h3>
+{% csrf_token %}
+	<p>{% if form.errors %}{% endif %}</p>
+	<ol>
+		<li><p {% if form.stl.errors %}class="error"{% endif %}>Stl File: {{ form.stl }} {{ form.stl.errors }}</p></li>
+		
+		<li><p {% if form.dxf.errors %}class="error"{% endif %}>Dxf File: {{ form.dxf }} {{ form.dxf.errors }}</p></li>
+		<br />
+		
+		<li><input type="submit" value="Submit!" class="btn btn-large btn-primary"></li>
+	</ol>
+</form>
+{% endblock %}
