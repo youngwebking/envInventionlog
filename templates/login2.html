@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block extrahead %}
+<link rel="stylesheet" type="text/css" href="/static/css/form.css">
+{% endblock %}
+{% block content %}
+<form class="form-container" action="" method="post">
+	{% csrf_token %}
+	{% if form.errors %}<p>Please correct the following fields:</p>{% endif %}
+	<ol>
+	<p>Question: {{ employee.question }}</p>
+	<li><div class="register_div left">
+		{% if form.answer.errors %}<p class="error">{{ form.answer.errors }}</p>{% endif %}
+		<p><label for="answer"{% if form.answer.errors %} class="error"{% endif %}>Answer:</label></p>
+		<p>{{ form.answer }}</p>
+	</div></li>
+	
+	<li><p><input type="submit" value="Login!" class="btn btn-large btn-primary"></p></li>
+	</ol>
+</form>
+{% endblock %}
