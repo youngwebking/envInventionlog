@@ -18,11 +18,11 @@
 		</ul>
 		<ul id="login-links">
 			{% if user.is_authenticated %}
-				<li><a href="/profile"><p class="nav-button">Profile</p></a></li>
-				<li><a href="/logout"><p class="nav-button">Logout</p></a></li>
+				<li><a href="{{ get_template_profile_link }}"><p class="nav-button">Profile</p></a></li>
+				<li><a href="/logout/"><p class="nav-button">Logout</p></a></li>
 			{% else %}
-		   	<li><a href="/login"><p class="nav-button">Login</p></a></li>
-		   	<li><a href="/register"><p class="nav-button">Register</p></a></li>
+		   	<li><a href="/login/"><p class="nav-button">Login</p></a></li>
+		   	<li><a href="/register/"><p class="nav-button">Register</p></a></li>
 		   {% endif %}
 		</ul>
 	</div>

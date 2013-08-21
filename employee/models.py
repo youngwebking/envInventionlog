@@ -13,13 +13,20 @@ JOB_CHOICES = (
 	('B', 'Model Builder'),
 )
 
+STATUS = (
+	('A', 'Available'),
+	('U', 'Unavailable'),
+)
+
 class Employee(models.Model):
 	user = models.OneToOneField(User)
-	name = models.CharField(max_length=50, unique=True)
+	name = models.CharField(max_length=50)
 	slug = models.SlugField(blank=True)
+	#username = models.CharField(max_length=8, unique=True)
 	job = models.CharField(max_length=1, choices=JOB_CHOICES)
 	question = models.CharField(max_length=200)
 	answer = models.CharField(max_length=50)
+	#status = models.CharField(max_length=1, choices=STATUS, default='A')
 	
 	pic_height=models.PositiveIntegerField(default=100, editable=False)
 	pic_width=models.PositiveIntegerField(default=100, editable=False)

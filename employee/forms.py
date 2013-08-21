@@ -29,3 +29,9 @@ class LoginForm(forms.Form):
 	#employee = Employee.objects.get(name=name)
 	#question = employee.question
 	answer = forms.CharField(label=(u'Answer'), widget=forms.PasswordInput(render_value=False))
+	
+class LoginForm1(forms.Form):
+	name = forms.CharField(label=(u'Name'))
+
+class LoginForm2(forms.Form):
+	answer = forms.CharField(label=(u'Answer'), widget=forms.PasswordInput(render_value=False))

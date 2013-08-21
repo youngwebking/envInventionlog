@@ -2,18 +2,24 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect, Http404
 from django.contrib.auth.models import User
-from employee.forms import RegistrationForm, LoginForm
+from employee.forms import RegistrationForm, LoginForm1, LoginForm2
 from django.contrib.auth import authenticate, login, logout
 from django.template.defaultfilters import slugify
 from django.contrib import messages
-from employee import helpers
+from employee.helpers import redirect_to_profile, get_profile_link
 from employee.models import Employee, Manager, ProductionManager, Draftsman, MachineTechnician, ModelBuilder
 from project.models import Project
+import MySQLdb
+import _mysql
+
+# HELPERS
+
 
 # REGISTERING -------------------------------------------
 def EmployeeRegistration(request):
 	if request.user.is_authenticated():
-		return HttpResponseRedirect("/profile/")
+		#return HttpResponseRedirect("/profile/")
+		return HttpResponseRedirect(get_profile_link(request))
 	if request.method == 'POST':
 		form = RegistrationForm(request.POST)
 		if form.is_valid():
@@ -45,7 +51,8 @@ def EmployeeRegistration(request):
 			if employee is not None:
 				login(request, employee)
 				if employee.is_authenticated:
-					return HttpResponseRedirect('/profile/')
+					#return HttpResponseRedirect("/profile/")
+					return HttpResponseRedirect(get_profile_link(request))
 		else:
 			return render_to_response('register.html', {'form': form}, context_instance=RequestContext(request))
 	else:
@@ -56,7 +63,8 @@ def EmployeeRegistration(request):
 # LOGGING IN-------------------------------------------		
 def LoginRequest(request):
 	if request.user.is_authenticated():
-		return HttpResponseRedirect('/profile/')
+		#return HttpResponseRedirect("/profile/")
+		return HttpResponseRedirect(get_profile_link(request))
 	if request.method == 'POST':
 		form = LoginForm(request.POST)
 		if form.is_valid():
@@ -66,7 +74,8 @@ def LoginRequest(request):
 			if employee is not None:
 				login(request, employee)
 				if employee.is_authenticated:
-					return HttpResponseRedirect('/profile/')
+					#return HttpResponseRedirect("/profile/")
+					return HttpResponseRedirect(get_profile_link(request))
 			else:
 				return render_to_response('login.html', {'form': form}, context_instance=RequestContext(request))
 		else:
@@ -77,6 +86,43 @@ def LoginRequest(request):
 		context = {'form': form}
 		return render_to_response('login.html', context, context_instance=RequestContext(request))
 	
+def Login(request, nameslug):
+	if request.user.is_authenticated():
+		#return HttpResponseRedirect("/profile/")
+		return HttpResponseRedirect(get_profile_link(request))
+	if request.method == 'POST':
+		if nameslug == '':
+			form = LoginForm1(request.POST)
+			if form.is_valid():
+				name = form.cleaned_data['name']
+				nameslug = slugify(name)
+				return HttpResponseRedirect('/login/' + nameslug)
+			return render_to_response('login.html', {'form': form}, context_instance=RequestContext(request))
+		else:
+			form = LoginForm2(request.POST)
+			if form.is_valid():
+				employee = Employee.objects.get(slug=nameslug)
+				name = employee.name
+				answer = form.cleaned_data['answer']
+				employee = authenticate(username=name, password=answer)
+				if employee is not None:
+					login(request, employee)
+					if employee.is_authenticated:
+						#return HttpResponseRedirect("/profile/")
+						return HttpResponseRedirect(get_profile_link(request))
+			return render_to_response('login.html', {'form': form}, context_instance=RequestContext(request))
+	else:
+		""" user is not submitting the form, show the login form """
+		if nameslug == '':
+			form = LoginForm1()
+			context = {'form': form}
+			return render_to_response('login.html', context, context_instance=RequestContext(request))
+		else:
+			employee = Employee.objects.get(slug=nameslug)
+			form = LoginForm2()
+			context = {'form': form, 'employee': employee}
+			return render_to_response('login2.html', context, context_instance=RequestContext(request))
+
 # LOGGING OUT------------------------------------------------	
 def LogoutRequest(request):
 	logout(request)
@@ -84,18 +130,59 @@ def LogoutRequest(request):
 
 # PROFILE PAGE--------------------------------------------
 def Profile(request):
-	context = None
 	if request.user.is_authenticated():
+		name = request.user.username
+		if request.user.employee.job == 'P':
+			pm = ProductionManager.objects.get(name=name)
+			#projects = Project.objects.filter(productionManager=pm.id)
+		elif request.user.employee.job == 'D':
+		#	projects = Project.objects.filter(draftsman.name=name)
+			pass
+		elif request.user.employee.job == 'T':
+		#	projects = Project.objects.filter(machineTech.name=name)
+			pass
+		elif request.user.employee.job == 'B':
+		#	projects = Project.objects.filter(modelBuilder.name=name)
+			pass
+		#context = {'projects': projects}
+		context = None
+		if request.method == 'POST':
+			try:
+				conn = MySQLdb.connect('localhost', 'root', 'chewy')
+				with conn:
+					cur = conn.cursor()
+					cur.execute("USE projects")
+					cur.execute("SELECT project_name FROM projects WHERE assigned='False'")
+					result = cur.fetchone()
+					project_name = `result`[2:-3]
+					cur.execute("SELECT patent_number FROM projects WHERE project_name='" + project_name + "'")
+					result2 = cur.fetchone()
+					patent_number = `result2`[1:-3]
+					cur.execute ("UPDATE projects SET assigned='True' WHERE project_name='%s' " % (project_name))
+					
+					slug = slugify(project_name)
+					project = Project(name=project_name, slug=slug, number=patent_number, status="I", productionManager=pm)
+					project.save()
+			
+			except _mysql.Error, e:
+			  	print "Error %d: %s" % (e.args[0], e.args[1])
+				sys.exit(1)
+
+			finally:
+				if conn:
+					conn.close()
 		return render_to_response('profile.html', context, context_instance=RequestContext(request))
 	else:
 		return HttpResponseRedirect('/')
 	
-def SpecificPM(request, pmslug):
-	#pm = ProductionManager.objects.get(slug=pmslug)
-	projects = Project.objects.filter(productionManager=(user.id-1))
-	context = {'pm': pm, 'projects': projects}
-	return render_to_response('profile.html', context, context_instance=RequestContext(request))
-#UPPPER MANAGEMENT---------------------------------------------------------
+#def SpecificPM(request, pmslug):
+#	#pm = ProductionManager.objects.get(slug=pmslug)
+#	projects = Project.objects.filter(productionManager=(user.id-1))
+#	context = {'pm': pm, 'projects': projects}
+#	return render_to_response('profile.html', context, context_instance=RequestContext(request))
+	
+
+#UPPER MANAGEMENT---------------------------------------------------------
 def ManagersAll(request):
 	managers = Manager.objects.all()
 	context = {'managers': managers}
@@ -127,6 +214,32 @@ def SpecificPM(request, pmslug):
 			mts = MachineTechnician.objects.filter(productionManager=pm.id)
 		except:
 			mts = None
+		if slugify(request.user.username) == pmslug:
+			if request.method == 'POST':
+				try:
+					conn = MySQLdb.connect('localhost', 'root', 'chewy')
+					with conn:
+						cur = conn.cursor()
+						cur.execute("USE projects")
+						cur.execute("SELECT project_name FROM projects WHERE assigned='False'")
+						result = cur.fetchone()
+						project_name = `result`[2:-3]
+						cur.execute("SELECT patent_number FROM projects WHERE project_name='" + project_name + "'")
+						result2 = cur.fetchone()
+						patent_number = `result2`[1:-3]
+						cur.execute ("UPDATE projects SET assigned='True' WHERE project_name='%s' " % (project_name))
+					
+						slug = slugify(project_name)
+						project = Project(name=project_name, slug=slug, number=patent_number, status="I", productionManager=pm)
+						project.save()
+			
+				except _mysql.Error, e:
+				  	print "Error %d: %s" % (e.args[0], e.args[1])
+					sys.exit(1)
+
+				finally:
+					if conn:
+						conn.close()
 		context = {'pm': pm, 'projects': projects, 'draftsmen': draftsmen, 'mts': mts}
 		return render_to_response('singlepm.html', context, context_instance=RequestContext(request))
 		
