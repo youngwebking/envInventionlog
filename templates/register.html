@@ -8,38 +8,38 @@
 	{% if form.errors %}<p>Please correct the following fields:</p>{% endif %}
 	<ol>
 	<li><div class="register_div left">
-		{% if form.name.errors %}<p class="error">{{ form.name.errors }}</p>{% endif %}
-		<p><label for="name"{% if form.name.errors %} class="error"{% endif %}>Name:</label></p>
+		{% if form.name.errors %}<p class="form-error">{{ form.name.errors }}</p>{% endif %}
+		<p><label for="name"{% if form.name.errors %} class="form-error"{% endif %}>Name:</label></p>
 		<p>{{ form.name }}</p>
 	</div></li>
 	<!--<li><div class="register_div left">
-		{% if form.username.errors %}<p class="error">{{ form.username.errors }}</p>{% endif %}
-		<p><label for="username"{% if form.username.errors %} class="error"{% endif %}>Username:</label></p>
+		{% if form.username.errors %}<p class="form-error">{{ form.username.errors }}</p>{% endif %}
+		<p><label for="username"{% if form.username.errors %} class="form-error"{% endif %}>Username:</label></p>
 		<p>{{ form.username }}</p>
 	</div></li>-->
 	<li><div class="register_div left">
-		{% if form.email.errors %}<p class="error">{{ form.email.errors }}</p>{% endif %}
-		<p><label for="email"{% if form.email.errors %} class="error"{% endif %}>Email:</label></p>
+		{% if form.email.errors %}<p class="form-error">{{ form.email.errors }}</p>{% endif %}
+		<p><label for="email"{% if form.email.errors %} class="form-error"{% endif %}>Email:</label></p>
 		<p>{{ form.email }}</p>
 	</div></li>
 	<li><div class="register_div left">
-		{% if form.job.errors %}<p class="error">{{ form.username.errors }}</p>{% endif %}
-		<p><label for="job"{% if form.job.errors %} class="error"{% endif %}>Job:</label></p>
+		{% if form.job.errors %}<p class="form-error">{{ form.username.errors }}</p>{% endif %}
+		<p><label for="job"{% if form.job.errors %} class="form-error"{% endif %}>Job:</label></p>
 		<p>{{ form.job }}</p>
 	</div></li>
 	<li><div class="register_div left">
-		{% if form.question.errors %}<p class="error">{{ form.question.errors }}</p>{% endif %}
-		<p><label for="question"{% if form.question.errors %} class="error"{% endif %}>Security Question:</label></p>
+		{% if form.question.errors %}<p class="form-error">{{ form.question.errors }}</p>{% endif %}
+		<p><label for="question"{% if form.question.errors %} class="form-error"{% endif %}>Security Question:</label></p>
 		<p>{{ form.question }}</p>
 	</div></li>
 	<li><div class="register_div left">
-		{% if form.answer.errors %}<p class="error">{{ form.answer.errors }}</p>{% endif %}
-		<p><label for="answer"{% if form.answer.errors %} class="error"{% endif %}>Answer:</label></p>
+		{% if form.answer.errors %}<p class="form-error">{{ form.answer.errors }}</p>{% endif %}
+		<p><label for="answer"{% if form.answer.errors %} class="form-error"{% endif %}>Answer:</label></p>
 		<p>{{ form.answer }}</p>
 	</div></li>
 	<li><div class="register_div left">
-		{% if form.job.errors %}<p class="error">{{ form.pic.errors }}</p>{% endif %}
-		<p><label for="pic"{% if form.pic.errors %} class="error"{% endif %}>Profile Picture:</label></p>
+		{% if form.job.errors %}<p class="form-error">{{ form.pic.errors }}</p>{% endif %}
+		<p><label for="pic"{% if form.pic.errors %} class="form-error"{% endif %}>Profile Picture:</label></p>
 		<p>{{ form.pic }}</p>
 	</div></li>
 	<li>

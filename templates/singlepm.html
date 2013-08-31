@@ -4,21 +4,27 @@
 {% block content %}
    <div id="singleemployee" class="container">
    	<h3>{{ pm }}</h3>
+   	<p>Username: {{ pm.username }}</p>
       <p>Job: {{ pm.get_job_display }}</p>
       <p>Current projects:<ol class="center">
       	{% for project in projects %}<li><a href="/projects/{{ project.slug }}">{{ project }}</a></li>{% endfor %}
       </ol></p>
-   	{% if user.employee.slug == pm.slug %}
+   	{% if user.employee.username == pm.username %}
    		<select title="status" class="dropdown">
 			  <option value="Available">Available</option>
 			  <option value="Unavailable">Unavailable</option>
 			</select>
+			<br />
+			<form action="" method="post">
+			{% csrf_token %}
+			<input class="btn" type="submit" value="Add New Project">
+		</form>
    	{% else %}
       <p>Assigned Draftsmen:<ol class="center">
-      	{% for draftsman in draftsmen %}<li><a href="/employees/draftsmen/{{ draftsman.slug }}">{{ draftsman }}</a></li>{% endfor %}
+      	{% for draftsman in draftsmen %}<li><a href="/employees/draftsmen/{{ draftsman.username }}">{{ draftsman }}</a></li>{% endfor %}
       </ol></p>
       <p>Assigned Machine Technicians:<ol class="center">
-      	{% for mt in mts %}<li><a href="/employees/machine-technicians/{{ mt.slug }}">{{ mt }}</a></li>{% endfor %}
+      	{% for mt in mts %}<li><a href="/employees/machine-technicians/{{ mt.username }}">{{ mt }}</a></li>{% endfor %}
       </ol></p>
       <br />
 		<!--<p>Job Description: {{ pm.description }}</p>-->

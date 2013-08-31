@@ -4,7 +4,7 @@
 {% block content %}
    <div id="employeelist" class="container left">
       {% for manager in managers %}
-         <p><a href="/employees/management/{{ manager.slug }}">{{ manager }}</a></p>
+         <p><a href="/employees/upper-management/{{ manager.username }}">{{ manager }}</a></p>
       {% endfor %}
    </div>
 {% endblock %}

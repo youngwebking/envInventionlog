@@ -2,10 +2,12 @@
 <head>
 	<link rel="stylesheet" type="text/css" href="/static/css/main.css"/>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+	<script src="/static/js/main.js"></script>
 	{% block extrahead %}
 	{% endblock %}
 </head>
 <body>
+{% load extra_tags %}
 <header>
 	<div id="navbar">
 		<ul id="nav-logo">
@@ -17,8 +19,9 @@
 		   <li><a href="/projects/" ><p class="nav-button">Projects</p></a></li>
 		</ul>
 		<ul id="login-links">
-			{% if user.is_authenticated %}
-				<li><a href="{{ get_template_profile_link }}"><p class="nav-button">Profile</p></a></li>
+			{% if user.is_authenticated %}{% with username=user.username job=user.employee.job %}
+				<li><a href="{% get_template_profile_link username job %}"><p class="nav-button">Profile</p></a></li>
+				{% endwith %}
 				<li><a href="/logout/"><p class="nav-button">Logout</p></a></li>
 			{% else %}
 		   	<li><a href="/login/"><p class="nav-button">Login</p></a></li>
@@ -27,8 +30,17 @@
 		</ul>
 	</div>
 </header>
+
 <div id="container" class="center">
+	{% if messages %}
+		<ul class="flashes">
+			{% for message in messages %}
+				<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
 	{% block content %}
+	<li>{{ print_hello }}</li>
 	{% endblock %}
 </div>
 <footer>

@@ -18,7 +18,7 @@ class Project(models.Model):
 	slug = models.SlugField(blank=True)
 	number = models.IntegerField(blank=True)
 	status = models.CharField(max_length=1, choices=STATUS)
-	deadline = models.DateField()
+	#deadline = models.DateField()
 	#group = models.CharField(max_length=1, choices=GROUP_CHOICES)
 	patentImage1 = models.FileField(upload_to=PATENTS, blank=True, null=True)
 	patentImage2 = models.FileField(upload_to=PATENTS, blank=True, null=True)
@@ -34,7 +34,7 @@ class Project(models.Model):
 	machineTech = models.ForeignKey("employee.MachineTechnician", blank=True, null=True)
 	modelBuilder = models.ForeignKey("employee.ModelBuilder", blank=True, null=True)
 	
-	percent_complete = models.IntegerField()
+	percent_complete = models.IntegerField(default=0)
 	draftApproved = models.BooleanField()
 	modelApproved = models.BooleanField()
 	

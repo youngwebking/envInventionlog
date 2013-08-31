@@ -10,7 +10,7 @@ from project.forms import UploadDraftForm, UploadModelForm
 def upload_draft(request, projectslug):
 	project = Project.objects.get(slug=projectslug)
 	if request.user.is_authenticated():
-		if request.user.username == project.draftsman.name:
+		if request.user.username == project.draftsman.username:
 			if request.method == 'POST':
 				form = UploadDraftForm(request.POST, request.FILES)
 				if form.is_valid():
@@ -41,7 +41,7 @@ def upload_draft(request, projectslug):
 def upload_model(request, projectslug):
 	project = Project.objects.get(slug=projectslug)
 	if request.user.is_authenticated():
-		if request.user.username == project.modelBuilder.name:
+		if request.user.username == project.modelBuilder.username:
 			if request.method == 'POST':
 				form = UploadModelForm(request.POST, request.FILES)
 				if form.is_valid():
@@ -77,7 +77,7 @@ def upload_model(request, projectslug):
 # APPROVE DRAFTS---------------------------------------------------------------------------------------------
 def ApproveDraft(request, projectslug):
 	project = Project.objects.get(slug=projectslug)
-	if request.user.username == project.productionManager.name:
+	if request.user.username == project.productionManager.username:
 		project.approve_draft()
 		return HttpResponseRedirect('/projects/' + projectslug + '/')
 	else:
@@ -86,7 +86,7 @@ def ApproveDraft(request, projectslug):
 # APPROVE MODELS---------------------------------------------------------------------------------------------
 def ApproveModel(request, projectslug):
 	project = Project.objects.get(slug=projectslug)
-	if request.user.username == project.productionManager.name:
+	if request.user.username == project.productionManager.username:
 		project.approve_model()
 		return HttpResponseRedirect('/projects/' + projectslug + '/')
 	else:

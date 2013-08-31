@@ -4,7 +4,7 @@
 {% block content %}
    <div id="employeelist" class="container left">
       {% for mt in mts %}
-         <p><a href="/employees/machine-technicians/{{ mt.slug }}">{{ mt }}</a></p>
+         <p><a href="/employees/machine-technicians/{{ mt.username }}">{{ mt }}</a></p>
       {% endfor %}
    </div>
 {% endblock %}

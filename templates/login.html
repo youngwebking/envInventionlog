@@ -8,9 +8,9 @@
 	{% if form.errors %}<p>Please correct the following fields:</p>{% endif %}
 	<ol>
 	<li><div class="register_div left">
-		{% if form.name.errors %}<p class="error">{{ form.name.errors }}</p>{% endif %}
-		<p><label for="name"{% if form.name.errors %} class="error"{% endif %}>Name:</label></p>
-		<p>{{ form.name }}</p>
+		{% if form.username.errors %}<p class="form-error">{{ form.username.errors }}</p>{% endif %}
+		<p><label for="name"{% if form.username.errors %} class="form-error"{% endif %}>Name:</label></p>
+		<p>{{ form.username }}</p>
 	</div></li>
 	
 	<li><p><input type="submit" value="Get Security Question!" class="btn btn-large btn-primary"></p></li>

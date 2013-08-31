@@ -21,25 +21,25 @@
       
       <p>Model Front View: {% if project.modelImgFront.image.url != None %}<a href="{{ project.modelImgFront.image.url }}"><br /><img height="100px" src="{{ project.modelImgFront.image.url }}" /></a>{% else %}None{% endif %}</p>
       
-      {% if project.draftsman.name == user.username %}
+      {% if project.draftsman.username == user.username %}
       	<form enctype="multipart/form-data">
 				<br />
 				<p>Upload Drafts</p>
 				<a href="/projects/draft-upload/{{ project.slug }}/">Upload Drafts</a>
 			</form>
-      <!--{% elif project.machineTech.name == user.username %}
+      <!--{% elif project.machineTech.username == user.username %}
       	<form enctype="multipart/form-data">
 				<br />
 				<p>Upload Prototype Pictures</p>
 				<a href="/projects/prototype-upload/{{ project.slug }}">Upload Prototype Pictures</a>
 			</form>-->
-      {% elif project.modelBuilder.name == user.username %}
+      {% elif project.modelBuilder.username == user.username %}
       	<form enctype="multipart/form-data">
 				<br />
 				<p>Upload Model Pictures</p>
 				<a href="/projects/model-upload/{{ project.slug }}">Upload Model Pictures</a>
 			</form>
-		{% elif project.productionManager.name == user.username %}
+		{% elif project.productionManager.username == user.username %}
       	<form enctype="multipart/form-data">
 				<br />
 				<p>Approve Drafts</p>

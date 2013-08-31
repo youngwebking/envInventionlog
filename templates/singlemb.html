@@ -8,7 +8,7 @@
       <p>Current projects:<ol class="center">
       	{% for project in projects %}<li><a href="/projects/{{ project.slug }}">{{ project }}</a></li>{% endfor %}
       </ol></p>
-      <p>Production Manager in charge: {% if project.productionManager != None %}<a href="/employees/production-managers/{{ project.productionManager.slug }}">{{ project.roductionManager }}</a>{% else %}None{% endif %}</p>
+      <p>Production Manager in charge: {% if project.productionManager != None %}<a href="/employees/production-managers/{{ project.productionManager.username }}">{{ project.roductionManager }}</a>{% else %}None{% endif %}</p>
       <!--<p>Job Description: {{ mb.description }}</p>-->
    </div>
 {% endblock %}

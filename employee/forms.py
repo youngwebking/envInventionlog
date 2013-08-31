@@ -12,7 +12,7 @@ JOB_CHOICES = (
 )
 
 class RegistrationForm(ModelForm):
-	name = forms.CharField(label=(u'Name'))
+	name = forms.CharField(label=(u'Name'), widget=forms.TextInput(attrs={'placeholder': 'ex: John Smith'}))
 	email = forms.EmailField(label=(u'Email Address'))
 	question = forms.CharField(label=(u'Question'))
 	answer = forms.CharField(label=(u'Answer'))
@@ -21,17 +21,17 @@ class RegistrationForm(ModelForm):
 	
 	class Meta:
 		model = Employee
-		exclude = ('user',)
+		exclude = ('user', 'username', 'status', 'rating',)
 		
 class LoginForm(forms.Form):
-	name = forms.CharField(label=(u'Name'))
+	username = forms.CharField(label=(u'Username'), widget=forms.TextInput(attrs={'placeholder': 'ex: john0087'}))
 	
 	#employee = Employee.objects.get(name=name)
 	#question = employee.question
 	answer = forms.CharField(label=(u'Answer'), widget=forms.PasswordInput(render_value=False))
 	
 class LoginForm1(forms.Form):
-	name = forms.CharField(label=(u'Name'))
+	username = forms.CharField(label=(u'Username'))
 
 class LoginForm2(forms.Form):
 	answer = forms.CharField(label=(u'Answer'), widget=forms.PasswordInput(render_value=False))

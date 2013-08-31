@@ -148,6 +148,14 @@ footer{
 .padding-right{
 	padding-right: 3px;
 }
+.dropdown{
+	border-radius: 3px;
+	border: 1px solid #111;
+	width: 200px;
+	height: 20px;
+	margin: 3px;
+	background-color: #fff;
+}
 .nav-button{
 	border-radius: 6px;
 	border: 1px solid #999;
@@ -207,14 +215,45 @@ footer{
 	margin-top: 6px;
 	padding: 20px 10px 20px 10px;
 }
-.error{
+.form-error{
 	color: red;
 }
 .errorlist{
 	color: red;
 }
-
-
+.flashes{
+	width: 1000px;
+	margin-top: 3px;
+	border-radius: 0 0 6px 6px;
+}
+.info{
+	background-color: #e0e0e0;
+	color: #111;
+	padding: 3px;
+	width: 100%;
+	border-radius: 0 0 6px 6px;
+}
+.success{
+	background-color: #d5ffd5;
+	color: green;
+	padding: 3px;
+	width: 100%;
+	border-radius: 0 0 6px 6px;
+}
+.warning{
+	background-color: #e0e0e0;
+	color: red;
+	padding: 3px;
+	width: 100%;
+	border-radius: 0 0 6px 6px;
+}
+.error{
+	background-color: #ffbfbf;
+	color: red;
+	padding: 3px;
+	width: 100%;
+	border-radius: 0 0 6px 6px;
+}
 
 
 

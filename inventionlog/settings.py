@@ -1,3 +1,4 @@
+from django.conf import global_settings
 import os
 # Django settings for inventionlog project.
 
@@ -122,6 +123,10 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
+    
+)
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -136,6 +141,7 @@ INSTALLED_APPS = (
     'static_pages',
     'employee',
     'project',
+    #'employee.context_processors.get_template_profile_link',
 )
 
 # A sample logging configuration. The only tangible logging

@@ -5,7 +5,6 @@ from django.template import RequestContext
 def index(request):
 	context = None
 	return render_to_response('index.html', context, context_instance=RequestContext(request))
-	#return render_to_response('index.html')
 
 def terms(request):
 	context = None
