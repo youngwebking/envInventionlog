@@ -11,21 +11,21 @@
 <header>
 	<div id="navbar">
 		<ul id="nav-logo">
-			<li><a href="/"><img src="/static/img/inventionland_logo.png" id="logo"/></a></li>
-			<li><a href="/" id="logo-text">INVENTIONLAND</a></li>
+			<li id="logo-link"><a href="/"><img src="/static/img/inventionland_logo.png" id="logo"/></a></li>
+			<li id="logo-text"><a href="/" id="logo-text-link">INVENTIONLAND</a></li>
 		</ul>
 		<ul id="nav-links">
-		   <li><a href="/employees/" ><p class="nav-button">Employees</p></a></li>
-		   <li><a href="/projects/" ><p class="nav-button">Projects</p></a></li>
+		   <li id="nav-link"><a href="/employees/" ><p class="nav-button">Employees</p></a></li>
+		   <li id="nav-link"><a href="/projects/" ><p class="nav-button">Projects</p></a></li>
 		</ul>
 		<ul id="login-links">
 			{% if user.is_authenticated %}{% with username=user.username job=user.employee.job %}
-				<li><a href="{% get_template_profile_link username job %}"><p class="nav-button">Profile</p></a></li>
+				<li id="login-link"><a href="{% get_template_profile_link username job %}"><p class="nav-button">Profile</p></a></li>
 				{% endwith %}
-				<li><a href="/logout/"><p class="nav-button">Logout</p></a></li>
+				<li id="login-link"><a href="/logout/"><p class="nav-button">Logout</p></a></li>
 			{% else %}
-		   	<li><a href="/login/"><p class="nav-button">Login</p></a></li>
-		   	<li><a href="/register/"><p class="nav-button">Register</p></a></li>
+		   	<li id="login-link"><a href="/login/"><p class="nav-button">Login</p></a></li>
+		   	<li id="login-link"><a href="/register/"><p class="nav-button">Register</p></a></li>
 		   {% endif %}
 		</ul>
 	</div>

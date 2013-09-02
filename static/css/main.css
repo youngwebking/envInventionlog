@@ -36,7 +36,7 @@ ul{
 	list-style: none;
 }
 ul li{
-	display: inline;
+	
 }
 ol{
 	list-style: none;
@@ -55,14 +55,29 @@ header{
 	background-color: #000;
 	height: 36px;
 	width: 100%;
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+	-webkit-box-flex: 1;
 }
 footer{
 	
+}
+#nav-logo li{
+	float: left;
+}
+#nav-links li{
+	float: left;
+}
+#login-links li{
+	float: left;
 }
 #container{
 	top: 0px;
 	background-color: none;
 	max-width:1000px;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-box-flex: 1;
 	overflow: hidden;
 	margin: 0 auto;
 	background-color: inherit;
@@ -72,18 +87,23 @@ footer{
 	padding-top: 0px;
 	padding-bottom: 8px;
 	margin: 0 auto;
+	display: -webkit-box;
 }
 #logo{
 	height: 25px;
-	float: left;
 	padding-right: 3px;
-	padding-top: 6px;
+	padding-top: 3px;
+	display: -webkit-box;
 }
 #logo-text{
+	border: 1px solid red;
+	margin-bottom: 7px;
+}
+#logo-text-link{
 	color: #999;
-	float: left;
 	margin-right: 10px;
-	margin-top: 5;
+	margin-top: 3px;
+	padding: 5px;
 	font-size: 1.6em;
 	font-weight: bold;
 	letter-spacing: -1px;
@@ -91,41 +111,31 @@ footer{
 	text-decoration: none;
 }
 #nav-logo{
-	
+	border: 1px solid blue;
 }
 #nav-links{
-	float: left;
-	margin-top: 8;
+	margin-top: 7;
 }
 #login-links{
+	margin-top: 7;
 	float: right;
-	margin-top: 8;
-}
-#home-login{
-	
 }
 #form-field{
-	float: right;
 }
 #employeelist{
 	width: 500px;
-	float: right;
 }
 #singleemployee{
 	width: 100px;
-	float: left;
 }
 #queue{
 	width: 300px;
-	float: right;	
 }
 #projectlist{
 	width: 500px;
-	float: right;
 }
 #singleproject{
 	width: 500px;
-	float: right;
 }
 #register_div{
 	border: 1px; solid #000;
@@ -135,14 +145,11 @@ footer{
 }
 #disclaimer{
 	font-size: 2.05em;
-	float: left;
 }
 .left{
-	float: left;
 	padding-left: 3px;
 }
 .right{
-	float: right;
 	padding-right: 3px;
 }
 .center{
@@ -192,7 +199,6 @@ footer{
 	border-radius: 10px;
 }
 .form-container{
-	float: right;
 	background-color: #e0e0e0;
 	border-radius: 6px;
 	text-align: center;
