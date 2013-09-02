@@ -94,32 +94,7 @@ def EmployeeRegistration(request):
 		form = RegistrationForm()
 		context = {'form': form}
 		return render_to_response('register.html', context, context_instance=RequestContext(request))
-# LOGGING IN-------------------------------------------		
-def LoginRequest(request):
-	if request.user.is_authenticated():
-		#return HttpResponseRedirect("/profile/")
-		return HttpResponseRedirect(get_profile_link(request))
-	if request.method == 'POST':
-		form = LoginForm(request.POST)
-		if form.is_valid():
-			username = form.cleaned_data['username']
-			answer = form.cleaned_data['answer']
-			employee = authenticate(username=username, password=answer)
-			if employee is not None:
-				login(request, employee)
-				if employee.is_authenticated:
-					#return HttpResponseRedirect("/profile/")
-					profile = get_profile_link(request)
-					return HttpResponseRedirect(get_profile_link(request))
-			else:
-				return render_to_response('login.html', {'form': form}, context_instance=RequestContext(request))
-		else:
-			return render_to_response('login.html', {'form': form}, context_instance=RequestContext(request))
-	else:
-		""" user is not submitting the form, show the login form """
-		form = LoginForm()
-		context = {'form': form}
-		return render_to_response('login.html', context, context_instance=RequestContext(request))
+# LOGGING IN-------------------------------------------
 	
 def Login(request, username):
 	if request.user.is_authenticated():
@@ -166,24 +141,37 @@ def LogoutRequest(request):
 	logout(request)
 	return HttpResponseRedirect('/')
 
-# PROFILE PAGE--------------------------------------------
-def Profile(request):
-	if request.user.is_authenticated():
-		username = request.user.username
-		if request.user.employee.job == 'P':
-			pm = ProductionManager.objects.get(username=username)
-			#projects = Project.objects.filter(productionManager=pm.id)
-		elif request.user.employee.job == 'D':
-		#	projects = Project.objects.filter(draftsman.username=username)
-			pass
-		elif request.user.employee.job == 'T':
-		#	projects = Project.objects.filter(machineTech.username=username)
-			pass
-		elif request.user.employee.job == 'B':
-		#	projects = Project.objects.filter(modelBuilder.username=username)
-			pass
-		#context = {'projects': projects}
-		context = None
+#UPPER MANAGEMENT---------------------------------------------------------
+def ManagersAll(request):
+	managers = Manager.objects.all()
+	context = {'managers': managers}
+	return render_to_response('../templates/managersall.html', context, context_instance=RequestContext(request))
+	
+def SpecificManager(request, username):
+	employee = Employee.objects.get(username=username)
+	try:
+		manager = Manager.objects.get(username=username)
+		context = {'manager': manager}
+	except:
+		messages.error(request, 'That manager does not exist!')
+		raise Http404("That manager does not exist!")
+	return render_to_response('singlemanager.html', context, context_instance=RequestContext(request))
+
+# PRODUCTION MANAGER---------------------------------------------------------
+def PMsAll(request):
+	pms = ProductionManager.objects.all()
+	context = {'pms': pms}
+	return render_to_response('../templates/pmsall.html', context, context_instance=RequestContext(request))
+	
+def SpecificPM(request, username):
+	try:
+		employee = Employee.objects.get(username=username)
+		pm = ProductionManager.objects.get(username=username)
+		projects = Project.objects.filter(productionManager=pm.id)
+	except:
+		messages.error(request, 'That production manager does not exist!')
+		raise Http404("That production manager does not exist!")
+	if slugify(request.user.username) == username:
 		if request.method == 'POST':
 			try:
 				conn = MySQLdb.connect('localhost', 'root', 'chewy')
@@ -199,7 +187,7 @@ def Profile(request):
 					cur.execute ("UPDATE projects SET assigned='True' WHERE project_name='%s' " % (project_name))
 					
 					slug = slugify(project_name)
-					project = Project(name=project_name, slug=slug, number=patent_number, status="I", productionManager=pm)
+					project = Project(name=project_name, slug=slug, number=patent_number, status="P", productionManager=pm)
 					project.save()
 			
 			except _mysql.Error, e:
@@ -209,77 +197,8 @@ def Profile(request):
 			finally:
 				if conn:
 					conn.close()
-		return render_to_response('profile.html', context, context_instance=RequestContext(request))
-	else:
-		return HttpResponseRedirect('/')
-	
-#def SpecificPM(request, pmslug):
-#	#pm = ProductionManager.objects.get(slug=pmslug)
-#	projects = Project.objects.filter(productionManager=(user.id-1))
-#	context = {'pm': pm, 'projects': projects}
-#	return render_to_response('profile.html', context, context_instance=RequestContext(request))
-	
-
-#UPPER MANAGEMENT---------------------------------------------------------
-def ManagersAll(request):
-	managers = Manager.objects.all()
-	context = {'managers': managers}
-	return render_to_response('../templates/managersall.html', context, context_instance=RequestContext(request))
-	
-def SpecificManager(request, username):
-	try:
-		manager = Manager.objects.get(username=username)
-		context = {'manager': manager}
-		return render_to_response('singlemanager.html', context, context_instance=RequestContext(request))
-	except:
-		messages.error(request, 'Try creating a Manager object.')
-		raise Http404("It doesn't mind whatever you put here")
-
-# PRODUCTION MANAGER---------------------------------------------------------
-def PMsAll(request):
-	pms = ProductionManager.objects.all()
-	context = {'pms': pms}
-	return render_to_response('../templates/pmsall.html', context, context_instance=RequestContext(request))
-	
-def SpecificPM(request, username):
-		pm = ProductionManager.objects.get(username=username)
-		projects = Project.objects.filter(productionManager=pm.id)
-		try:
-			draftsmen = Draftsman.objects.filter(productionManager=pm.id)
-		except:
-			draftsmen = None
-		try:
-			mts = MachineTechnician.objects.filter(productionManager=pm.id)
-		except:
-			mts = None
-		if slugify(request.user.username) == username:
-			if request.method == 'POST':
-				try:
-					conn = MySQLdb.connect('localhost', 'root', 'chewy')
-					with conn:
-						cur = conn.cursor()
-						cur.execute("USE projects")
-						cur.execute("SELECT project_name FROM projects WHERE assigned='False'")
-						result = cur.fetchone()
-						project_name = `result`[2:-3]
-						cur.execute("SELECT patent_number FROM projects WHERE project_name='" + project_name + "'")
-						result2 = cur.fetchone()
-						patent_number = `result2`[1:-3]
-						cur.execute ("UPDATE projects SET assigned='True' WHERE project_name='%s' " % (project_name))
-					
-						slug = slugify(project_name)
-						project = Project(name=project_name, slug=slug, number=patent_number, status="P", productionManager=pm)
-						project.save()
-			
-				except _mysql.Error, e:
-				  	print "Error %d: %s" % (e.args[0], e.args[1])
-					sys.exit(1)
-
-				finally:
-					if conn:
-						conn.close()
-		context = {'pm': pm, 'projects': projects, 'draftsmen': draftsmen, 'mts': mts}
-		return render_to_response('singlepm.html', context, context_instance=RequestContext(request))
+	context = {'pm': pm, 'employee': employee, 'projects': projects}
+	return render_to_response('singlepm.html', context, context_instance=RequestContext(request))
 		
 
 # DRAFTSMEN -----------------------------------------------------------------
@@ -290,13 +209,14 @@ def DraftsmenAll(request):
 	
 def SpecificDraftsman(request, username):
 	try:
+		employee = Employee.objects.get(username=username)
 		draftsman = Draftsman.objects.get(username=username)
 		projects = Project.objects.filter(draftsman=draftsman.id)
 		context = {'draftsman': draftsman, 'projects': projects}
-		return render_to_response('singledraftsman.html', context, context_instance=RequestContext(request))
 	except:
 		messages.error(request, 'That draftsman does not exist!')
 		raise Http404("That draftsman does not exist!")
+	return render_to_response('singledraftsman.html', context, context_instance=RequestContext(request))
 
 # MACHINE TECHNICIANS ------------------------------------------------------------------
 def MTsAll(request):
@@ -306,13 +226,14 @@ def MTsAll(request):
 	
 def SpecificMT(request, username):
 	try:
+		employee = Employee.objects.get(username=username)
 		mt = MachineTechnician.objects.get(username=username)
 		projects = Project.objects.filter(machineTech=mt.id)
 		context = {'mt': mt, 'projects': projects}
-		return render_to_response('singlemt.html', context, context_instance=RequestContext(request))
 	except:
 		messages.error(request, 'That Machine Technician does not exist!')
 		raise Http404("That Machine Technician does not exist!")
+	return render_to_response('singlemt.html', context, context_instance=RequestContext(request))
 	
 # MODEL BUILDERS ------------------------------------------------------------------
 def MBsAll(request):
@@ -322,13 +243,14 @@ def MBsAll(request):
 	
 def SpecificMB(request, username):
 	try:
+		employee = Employee.objects.get(username=username)
 		mb = ModelBuilder.objects.get(username=username)
 		projects = Project.objects.filter(modelBuilder=mb.id)
 		context = {'mb': mb, 'projects': projects}
-		return render_to_response('singlemb.html', context, context_instance=RequestContext(request))
 	except:
 		messages.error(request, 'That Model Builder does not exist!')
 		raise Http404("That Model Builder does not exist!")
+	return render_to_response('singlemb.html', context, context_instance=RequestContext(request))
 	
 	
 

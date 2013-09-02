@@ -74,6 +74,15 @@ def upload_model(request, projectslug):
 	else:
 		return HttpResponseRedirect('/')
 
+# ACCEPT PROJECT---------------------------------------------------------------------------------------------
+def AcceptProject(request, projectslug):
+	project = Project.objects.get(slug=projectslug)
+	if request.user.username == project.productionManager.username:
+		project.accept_project()
+		return HttpResponseRedirect('/projects/' + projectslug + '/')
+	else:
+		return HttpResponseRedirect('/')
+
 # APPROVE DRAFTS---------------------------------------------------------------------------------------------
 def ApproveDraft(request, projectslug):
 	project = Project.objects.get(slug=projectslug)

@@ -3,29 +3,47 @@
 	<link rel="stylesheet", type="text/css", href="/static/css/form.css">
 {% endblock %}
 {% block content %}
-<div class="container">
-	<h1>Welcome to your profile, {{ user.username }}</h1>
-	<!--{#% if user.employee.job == 'P' OR user.employee.job == 'D' OR user.employee.job == 'T' OR user.employee.job == 'B' %}-->
-	<p>Your current projects:
-			<ol class="center">
-		   	{% for project in projects %}
-		   		<li><a href="/projects/{{ project.slug }}">{{ project }}</a></li>
-		   	{% endfor %}
-		   </ol>
-		</p>
-		<br />
-	{% if user.employee.job == 'P'%}
-		<form action="" method="post">
-			{% csrf_token %}
-			<input class="btn" type="submit" value="Add New Project">
-		</form>
-	{% elif user.employee.job == 'D' %}
-		<!--<form enctype="multipart/form-data">
-			{{ uploadform.draftImage1 }}
+	<div id="singleemployee" class="container">
+		<h1>Welcome to your profile, {{ employee.name }}</h1>
+		{% if user.employee.job == 'P' or user.employee.job == 'D' or user.employee.job == 'T' or user.employee.job == 'B' %}
+		<p>Username: {{ employee.username }}</p>
+		<p>Job: {{ employee.get_job_display }}</p>
+		{% endif %}
+		{% if user.employee.username == employee.username %}
+			<label for="status">Status: </label>
+			<select name="status" class="dropdown">
+			  <option value="Available">Available</option>
+			  <option value="Unavailable">Unavailable</option>
+			</select>
 			<br />
-			<input class='btn' type="submit" value='Post' name='action'>
-		</form>-->
+		{% else %}
+			<p>Current Projects:
+				<ol class="center">
+					{% for project in projects %}
+						<li><a href="/projects/{{ project.slug }}">{{ project }}</a></li>
+					{% endfor %}
+				</ol>
+			</p>
+			<br />
+		{% endif %}
+		{% block extracontent %}
+		{% endblock %}
+	</div>
+	{% if user.employee.username == employee.username %}
+		<div id="queue" class="container">
+			<h4>Current Projects</h4>
+			<ol class="center">
+				{% for project in projects %}
+					<li><a href="/projects/{{ project.slug }}">{{ project }}</a></li>
+				{% endfor %}
+			</ol>
+			<br />
+			<h4>Pending Projects</h4>
+			<ol class="center">
+				{% for project in projects %}
+					<li><a href="/projects/{{ project.slug }}">{{ project }}</a></li>
+				{% endfor %}
+			</ol>
+		</div>
 	{% endif %}
-</div>
-
 {% endblock %}
