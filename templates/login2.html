@@ -5,12 +5,11 @@
 {% block content %}
 <form class="form-container" action="" method="post">
 	{% csrf_token %}
-	{% if form.errors %}<p>Please correct the following fields:</p>{% endif %}
 	<ol>
 	<p>Question: {{ employee.question }}</p>
 	<li><div class="register_div left">
 		{% if form.answer.errors %}<p class="form-error">{{ form.answer.errors }}</p>{% endif %}
-		<p><label for="answer"{% if form.answer.errors %} class="form-error"{% endif %}>Answer:</label></p>
+		<label for="answer"{% if form.answer.errors %} class="form-error"{% endif %}>Answer:</label>
 		<p>{{ form.answer }}</p>
 	</div></li>
 	

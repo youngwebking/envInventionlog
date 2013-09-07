@@ -4,6 +4,8 @@
 	border: 0px;
 	font-family: ubuntu;
 	text-align: left;
+	-webkit-box-flex: 0;
+	-webkit-box-orient: vertical;
 }
 body{
 	background-image: url(/static/img/diamondPlateBG.jpg);
@@ -12,9 +14,31 @@ body{
 	background-size: 1600px 1200px;
 	text-align: center;
 	color: #000;
+	display: box;
+	display: -webkit-box;
+	display: -moz-box;
+	-webkit-box-pack: start;
 }
 header, footer, section, nav, aside, hgroup{
 	display: block;
+}
+filler{
+	-webkit-box-flex: 1;
+}
+container{
+	position: relative;
+	top: 0px;
+	left: 0px;
+	background-color: none;
+	max-width:1000px;
+	display: box;
+	display: -webkit-box;
+	display: -moz-box;
+	-webkit-box-orient: horizontal;
+	-webkit-box-flex: 0;
+	overflow: hidden;
+	margin: 0 auto;
+	background-color: inherit;
 }
 a:link{
 	color: blue;
@@ -55,55 +79,45 @@ header{
 	background-color: #000;
 	height: 36px;
 	width: 100%;
-	display: -webkit-box;
 	-webkit-box-orient: horizontal;
-	-webkit-box-flex: 1;
 }
 footer{
-	
+	max-width: 1000px;
 }
 #nav-logo li{
 	float: left;
 }
 #nav-links li{
 	float: left;
+	margin-right: 3px;
 }
 #login-links li{
 	float: left;
-}
-#container{
-	top: 0px;
-	background-color: none;
-	max-width:1000px;
-	display: -webkit-box;
-	-webkit-box-orient: vertical;
-	-webkit-box-flex: 1;
-	overflow: hidden;
-	margin: 0 auto;
-	background-color: inherit;
+	margin-left: 3px;
 }
 #navbar{
 	width:1000px;
 	padding-top: 0px;
 	padding-bottom: 8px;
 	margin: 0 auto;
+	display: box;
 	display: -webkit-box;
+	display: -moz-box;
+	-webkit-box-orient: horizontal;
+	-webkit-box-flex: 0;
 }
 #logo{
 	height: 25px;
 	padding-right: 3px;
-	padding-top: 3px;
-	display: -webkit-box;
+	padding-top: 6px;
 }
 #logo-text{
-	border: 1px solid red;
-	margin-bottom: 7px;
+	margin-top: 4px;
 }
 #logo-text-link{
 	color: #999;
 	margin-right: 10px;
 	margin-top: 3px;
-	padding: 5px;
 	font-size: 1.6em;
 	font-weight: bold;
 	letter-spacing: -1px;
@@ -111,14 +125,13 @@ footer{
 	text-decoration: none;
 }
 #nav-logo{
-	border: 1px solid blue;
+	
 }
 #nav-links{
-	margin-top: 7;
+	margin-top: 8px;
 }
 #login-links{
-	margin-top: 7;
-	float: right;
+	margin-top: 8px;
 }
 #form-field{
 }
@@ -126,10 +139,15 @@ footer{
 	width: 500px;
 }
 #singleemployee{
-	width: 100px;
+	display: box;
+	display: -webkit-box;
+	display: -moz-box;
+	-webkit-box-flex: 1;
+	-webkit-box-orient: vertical;
 }
 #queue{
 	width: 300px;
+	margin-left: 6px;
 }
 #projectlist{
 	width: 500px;
@@ -145,6 +163,9 @@ footer{
 }
 #disclaimer{
 	font-size: 2.05em;
+}
+.filler{
+	-webkit-box-flex: 1;
 }
 .left{
 	padding-left: 3px;
@@ -191,9 +212,8 @@ footer{
 	height: 40px;
 }
 .btn-primary{
-	background-color: #669966;
-	background-color: #999;
-	color: #f9f9f9;
+	background-color: #000;
+	color: #999;
 	font-size: 1.5em;
 	display: inline-block;
 	border-radius: 10px;
@@ -205,7 +225,10 @@ footer{
 	margin-top: 3px;
 	padding: 100px 20px 100px 20px;
 	width: 500px;
-	display: table;
+	display: box;
+	display: -webkit-box;
+	display: -moz-box;
+	-webkit-box-orient: center;
 }
 .form{
 	width: 300px;
@@ -234,9 +257,10 @@ footer{
 	color: red;
 }
 .flashes{
-	width: 1000px;
-	margin-top: 3px;
+	max-width: 1000px;
 	border-radius: 0 0 6px 6px;
+	position: absolute;
+	left: 0px;
 }
 .info{
 	background-color: #e0e0e0;

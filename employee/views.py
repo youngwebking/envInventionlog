@@ -19,7 +19,6 @@ import re
 # REGISTERING -------------------------------------------
 def EmployeeRegistration(request):
 	if request.user.is_authenticated():
-		#return HttpResponseRedirect("/profile/")
 		return HttpResponseRedirect(get_profile_link(request))
 	if request.method == 'POST':
 		form = RegistrationForm(request.POST)
@@ -83,11 +82,11 @@ def EmployeeRegistration(request):
 			if employee is not None:
 				login(request, employee)
 				if employee.is_authenticated:
-					#return HttpResponseRedirect("/profile/")
 					profile = get_profile_link(request)
 					messages.add_message(request, messages.SUCCESS, 'Your account has been successfully activated! Your username is: ' + username + '.')
 					return HttpResponseRedirect(get_profile_link(request))
 		else:
+			messages.add_message(request, messages.ERROR, 'Not all of the required fields were filled in. Please fill in the red fields.')
 			return render_to_response('register.html', {'form': form}, context_instance=RequestContext(request))
 	else:
 		""" user is not submitting the form, show them a blank registration form """
@@ -98,7 +97,6 @@ def EmployeeRegistration(request):
 	
 def Login(request, username):
 	if request.user.is_authenticated():
-		#return HttpResponseRedirect("/profile/")
 		return HttpResponseRedirect(get_profile_link(request))
 	if request.method == 'POST':
 		if username == '':
@@ -106,6 +104,12 @@ def Login(request, username):
 			if form.is_valid():
 				username = form.cleaned_data['username']
 				username = slugify(username)
+				try:
+					employee = Employee.objects.get(username=username)
+					username = employee.username
+				except:
+					messages.add_message(request, messages.ERROR, 'The name you entered could not be found. Please try again.')
+					return HttpResponseRedirect('/login')
 				return HttpResponseRedirect('/login/' + username)
 			return render_to_response('login.html', {'form': form}, context_instance=RequestContext(request))
 		else:
@@ -122,7 +126,8 @@ def Login(request, username):
 						profile = get_profile_link(request)
 						messages.add_message(request, messages.SUCCESS, 'You have been successfully logged in!')
 						return HttpResponseRedirect(get_profile_link(request))
-			return HttpResponseRedirect('/login/')
+			messages.add_message(request, messages.ERROR, 'You answered the question incorrectly. Please try again.')
+			return HttpResponseRedirect('/login/' + username)
 	else:
 		""" user is not submitting the form, show the login form """
 		if username == '':
@@ -167,7 +172,9 @@ def SpecificPM(request, username):
 	try:
 		employee = Employee.objects.get(username=username)
 		pm = ProductionManager.objects.get(username=username)
-		projects = Project.objects.filter(productionManager=pm.id)
+		all_projects = Project.objects.filter(productionManager=pm.id)
+		pending_projects = all_projects.filter(accepted=False)
+		projects = all_projects.filter(accepted=True)
 	except:
 		messages.error(request, 'That production manager does not exist!')
 		raise Http404("That production manager does not exist!")
@@ -197,7 +204,7 @@ def SpecificPM(request, username):
 			finally:
 				if conn:
 					conn.close()
-	context = {'pm': pm, 'employee': employee, 'projects': projects}
+	context = {'pm': pm, 'employee': employee, 'projects': projects, 'pending': pending_projects}
 	return render_to_response('singlepm.html', context, context_instance=RequestContext(request))
 		
 

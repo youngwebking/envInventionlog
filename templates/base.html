@@ -1,23 +1,24 @@
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="/static/css/main.css"/>
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/main.css"/>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-	<script src="/static/js/main.js"></script>
+	<script src="{{ STATIC_URL }}js/main.js"></script>
 	{% block extrahead %}
 	{% endblock %}
 </head>
 <body>
 {% load extra_tags %}
 <header>
-	<div id="navbar">
+	<nav id="navbar">
 		<ul id="nav-logo">
-			<li id="logo-link"><a href="/"><img src="/static/img/inventionland_logo.png" id="logo"/></a></li>
+			<li id="logo-link"><a href="/"><img src="{{ STATIC_URL }}img/inventionland_logo.png" id="logo"/></a></li>
 			<li id="logo-text"><a href="/" id="logo-text-link">INVENTIONLAND</a></li>
 		</ul>
 		<ul id="nav-links">
 		   <li id="nav-link"><a href="/employees/" ><p class="nav-button">Employees</p></a></li>
 		   <li id="nav-link"><a href="/projects/" ><p class="nav-button">Projects</p></a></li>
 		</ul>
+		<div class="filler"></div>
 		<ul id="login-links">
 			{% if user.is_authenticated %}{% with username=user.username job=user.employee.job %}
 				<li id="login-link"><a href="{% get_template_profile_link username job %}"><p class="nav-button">Profile</p></a></li>
@@ -28,31 +29,29 @@
 		   	<li id="login-link"><a href="/register/"><p class="nav-button">Register</p></a></li>
 		   {% endif %}
 		</ul>
-	</div>
+	</nav>
 </header>
 
-<div id="container" class="">
+<container>
 	{% if messages %}
 		<ul class="flashes">
 			{% for message in messages %}
 				<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
 			{% endfor %}
 		</ul>
+		<br />
 	{% endif %}
+	<div class="filler"></div>
 	{% block content %}
 	{% endblock %}
-</div>
-<footer>
-	<!--<ul id="nav-links">
-		<li><a href="/"><img src="/static/img/davison/davison_logo.png" id="logo"/></a></li>
-		<li class="padding-right"><a href="/">Home</a></li>|
-		<li class="padding-right"><a href="/employees/pms">Project Managers</a></li>
-	</ul>
-	<ul id="login-links">
-		<li class="padding-right"><a href="#">Login</a></li>|
-		<li><a href="#">Register</a></li>
-	</ul>-->
-</footer>
-</div>
+	<div class="filler"></div>
+</container>
+<!--<footer class="container">
+	<ol id="footer-links">
+		<li><h4>General</h4></li>
+		<li class="footer-link"><a href="#">About</a></li>
+		<li class="footer-link"><a href="#">Contact</a></li>
+	</ol>
+</footer>-->
 </body>
 </html>
