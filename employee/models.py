@@ -11,6 +11,7 @@ JOB_CHOICES = (
 	('D', 'Draftsman'),
 	('T', 'Machine Technician'),
 	('B', 'Model Builder'),
+	('A', 'Admin'),
 )
 
 STATUS = (
@@ -31,7 +32,7 @@ class Employee(models.Model):
 	
 	pic_height=models.PositiveIntegerField(default=100, editable=False)
 	pic_width=models.PositiveIntegerField(default=100, editable=False)
-	pic = models.ImageField(upload_to="employees/pics", height_field='pic_height', width_field='pic_width', blank=True, null=True)
+	pic = models.ImageField(upload_to="employees/pics", blank=True, null=True)
 	
 	def __unicode__(self):
 		return self.name
@@ -42,41 +43,31 @@ class Employee(models.Model):
 #post_save.connect(create_employee_user_callback, User)
 
 class Manager(Employee):
-	#assigned = models.CharField(max_length=1, choices=ASSN_CHOICES)
 	description = models.TextField(blank=True)
-	
-	#def approve(project):
-		#project.draft.approved = True
 	
 	def __unicode__(self):
 		return self.name
 
 class ProductionManager(Employee):
 	description = models.TextField(blank=True)
-	projects = models.ForeignKey("project.Project", blank=True, null=True)
-	#def approve(project):
-		#project.models.draft.approved = True
 	
 	def __unicode__(self):
 		return self.name
 		
 class Draftsman(Employee):
 	description = models.TextField(blank=True)
-	productionManager = models.ForeignKey("ProductionManager", blank=True, null=True)
 	
 	def __unicode__(self):
 		return self.name
 		
 class MachineTechnician(Employee):
 	description = models.TextField(blank=True)
-	productionManager = models.ForeignKey("ProductionManager", blank=True, null=True)
 	
 	def __unicode__(self):
 		return self.name
 		
 class ModelBuilder(Employee):
 	description = models.TextField(blank=True)
-	productionManager = models.ForeignKey("ProductionManager", blank=True, null=True)
 	
 	def __unicode__(self):
 		return self.name
