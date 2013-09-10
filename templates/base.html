@@ -18,7 +18,7 @@
 		   <li id="nav-link"><a href="/employees/" ><p class="nav-button">Employees</p></a></li>
 		   <li id="nav-link"><a href="/projects/" ><p class="nav-button">Projects</p></a></li>
 		</ul>
-		<div class="filler"></div>
+		<div class="fill"></div>
 		<ul id="login-links">
 			{% if user.is_authenticated %}{% with username=user.username job=user.employee.job %}
 				<li id="login-link"><a href="{% get_template_profile_link username job %}"><p class="nav-button">Profile</p></a></li>
@@ -32,7 +32,7 @@
 	</nav>
 </header>
 
-<container>
+<container class="center">
 	{% if messages %}
 		<ul class="flashes">
 			{% for message in messages %}
@@ -41,10 +41,10 @@
 		</ul>
 		<br />
 	{% endif %}
-	<div class="filler"></div>
+	<div class="fill"></div>
 	{% block content %}
 	{% endblock %}
-	<div class="filler"></div>
+	<div class="fill"></div>
 </container>
 <!--<footer class="container">
 	<ol id="footer-links">

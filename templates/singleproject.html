@@ -2,7 +2,9 @@
 {% block extrahead %}
 {% endblock %}
 {% block content %}
-   <div id="singleproject" class="container left">
+<ul class="box horizontal">
+	<li>
+   <div id="singleproject" class="container box">
       <h3>{{ project }}: {{ project.percent_complete }}% Complete</h3>
       <p>Status: {{ project.get_status_display }}(
       {% if not project.accepted %}
@@ -26,15 +28,12 @@
 		   <p>Project machine technician: {% if project.machineTech != None %}<a href="/employees/machine-technicians/{{ project.machineTech.slug }}">{{ project.machineTech }}</a>{% else %}None{% endif %}</p>
 		   <p>Project model builder: {% if project.modelBuilder != None %}<a href="/employees/model-builders/{{ project.modelBuilder.slug }}">{{ project.modelBuilder }}</a>{% else %}None{% endif %}</p>
 		   <p>Patent Image: {% if project.patentImage1.url != None %}<a href="{{ project.patentImage1.url }}">{{ project.patentImage1.url }}</a>{% else %}None{% endif %}</p>
+		   <br />
 		   <p>Drafts: {% if project.draftApproved == True %}Approved{% endif %}</p>
 		   <p>Stl File: {% if project.stl != None %}<a href="{{ project.stl.stl.url }}">download</a>{% else %}None{% endif %}</p>
 		   <p>Dxf File: {% if project.dxf != None %}<a href="{{ project.dxf.dxf.url }}">download</a>{% else %}None{% endif %}</p>
+		   <hr />
 		   <p>Model Images: {% if project.modelApproved %}Approved{% endif %}</p>
-		   <p id="topView">Model Top View: {% if project.modelImgTop.image.url != None %}<a href="{{ project.modelImgTop.image.url }}"><br /><img height="100px" src="{{ project.modelImgTop.image.url }}" /></a>{% else %}None{% endif %}</p>
-		   
-		   <p id="rightView">Model Right View: {% if project.modelImgRight.image.url != None %}<a href="{{ project.modelImgRight.image.url }}"><br /><img height="100px" src="{{ project.modelImgRight.image.url }}" /></a>{% else %}None{% endif %}</p>
-		   
-		   <p id="frontView">Model Front View: {% if project.modelImgFront.image.url != None %}<a href="{{ project.modelImgFront.image.url }}"><br /><img height="100px" src="{{ project.modelImgFront.image.url }}" /></a>{% else %}None{% endif %}</p>
 		   
 		   {% if project.draftsman.username == user.username %}
 		   	<form enctype="multipart/form-data">
@@ -42,8 +41,8 @@
 					<p{% if not project.accepted %} class="inactive"{% endif %}>Upload Drafts</p>
 					{% if project.accepted %}<a href="/projects/draft-upload/{{ project.slug }}/">Upload Drafts</a>{% else %}<a class="inactive" href="#">Upload Drafts</a>{% endif %}
 				</form>
-		   <!--{% elif project.machineTech.username == user.username %}
-		   	<form enctype="multipart/form-data">
+		   {% elif project.machineTech.username == user.username %}
+		   	<!--<form enctype="multipart/form-data">
 					<br />
 					<p>Upload Prototype Pictures</p>
 					<a href="/projects/prototype-upload/{{ project.slug }}">Upload Prototype Pictures</a>
@@ -75,4 +74,48 @@
 			{% endif %}
       {% endif %}
    </div>
+   </li>
+   <li>
+   <div id="topView" class="container box">
+   	<p>Model Top View: {% if project.modelImgTop.image.url != None %}
+   		<a href="{{ project.modelImgTop.image.url }}"><br />
+   		<img height="100px" src="{{ project.modelImgTop.image.url }}" /></a>
+   	{% else %}None{% endif %}</p>
+   </div>
+   </li>
+	<li>
+	<div id="view34" class="container box">
+		<p>Model 3/4 View: {% if project.modelImg34.image.url != None %}
+			<a href="{{ project.modelImg34.image.url }}"><br />
+			<img height="100px" src="{{ project.modelImg34.image.url }}" /></a>
+		{% else %}None{% endif %}</p>
+	</div>
+	</li>
+</ul>
+<ul class="box horizontal">
+	<li>
+	<div id="leftView" class="container box">
+		<p>Model Left View: {% if project.modelImgLeft.image.url != None %}
+			<a href="{{ project.modelImgLeft.image.url }}"><br />
+			<img height="100px" src="{{ project.modelImgLeft.image.url }}" /></a>
+		{% else %}None{% endif %}</p>
+	</div>
+	</li>
+	<li>
+	<div id="frontView" class="container box">
+		<p>Model Front View: {% if project.modelImgFront.image.url != None %}
+			<a href="{{ project.modelImgFront.image.url }}"><br />
+			<img height="100px" src="{{ project.modelImgFront.image.url }}" /></a>
+		{% else %}None{% endif %}</p>
+	</div>
+	</li>
+	<li>
+	<div id="rightView" class="container box">
+		<p>Model Right View: {% if project.modelImgRight.image.url != None %}
+			<a href="{{ project.modelImgRight.image.url }}"><br />
+			<img height="100px" src="{{ project.modelImgRight.image.url }}" /></a>
+		{% else %}None{% endif %}</p>
+	</div>
+</ul>
+</div>
 {% endblock %}
