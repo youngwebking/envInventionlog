@@ -153,8 +153,8 @@ def ManagersAll(request):
 	return render_to_response('../templates/managersall.html', context, context_instance=RequestContext(request))
 	
 def SpecificManager(request, username):
-	employee = Employee.objects.get(username=username)
 	try:
+		employee = Employee.objects.get(username=username)
 		manager = Manager.objects.get(username=username)
 		context = {'manager': manager}
 	except:

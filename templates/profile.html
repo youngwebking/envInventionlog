@@ -3,8 +3,9 @@
 	<link rel="stylesheet", type="text/css", href="/static/css/form.css">
 {% endblock %}
 {% block content %}
-	<div id="singleemployee" class="container">
-		<h1>Welcome to your profile, {{ employee.name }}</h1>
+<div class="box horizontal">
+	<div id="singleemployee" class="container box">
+		<h1>{% if user.employee.username == employee.username %}Welcome to your profile, {% endif %}{{ employee.name }}</h1>
 		{% if user.employee.job == 'P' or user.employee.job == 'D' or user.employee.job == 'T' or user.employee.job == 'B' %}
 		<p>Username: {{ employee.username }}</p>
 		<p>Job: {{ employee.get_job_display }}</p>
@@ -30,7 +31,7 @@
 		{% endblock %}
 	</div>
 	{% if user.employee.username == employee.username %}
-		<div id="queue" class="container">
+		<div id="queue" class="container box">
 			<h4>Current Projects</h4>
 			<ol class="center">
 				{% for project in projects %}
@@ -46,4 +47,5 @@
 			</ol>
 		</div>
 	{% endif %}
+</div>
 {% endblock %}

@@ -19,27 +19,14 @@ body{
 	-webkit-box-pack: start;
 }
 header, footer, section, nav, aside, hgroup{
-	display: block;
-}
-filler{
-	-webkit-box-flex: 1;
+	
 }
 img{
 	border: 0px;
 }
 container{
-	position: relative;
-	top: 0px;
-	left: 0px;
-	background-color: none;
-	max-width:1000px;
-	display: box;
-	display: -webkit-box;
-	display: -moz-box;
+	max-width: 1000px;
 	-webkit-box-orient: vertical;
-	-webkit-box-flex: 0;
-	overflow: auto;
-	background-color: inherit;
 }
 container *{
 }
@@ -82,32 +69,23 @@ header{
 	background-color: #000;
 	height: 36px;
 	width: 100%;
-	-webkit-box-orient: horizontal;
 }
 footer{
 	max-width: 1000px;
 }
 #nav-logo li{
-	float: left;
+	
 }
 #nav-links li{
-	float: left;
 	margin-right: 3px;
 }
 #login-links li{
-	float: left;
 	margin-left: 3px;
 }
 #navbar{
 	width:1000px;
 	padding-top: 0px;
 	padding-bottom: 8px;
-	margin: 0 auto;
-	display: box;
-	display: -webkit-box;
-	display: -moz-box;
-	-webkit-box-orient: horizontal;
-	-webkit-box-flex: 0;
 }
 #logo{
 	height: 25px;
@@ -143,19 +121,21 @@ footer{
 }
 #singleemployee{
 	-webkit-box-flex: 1;
-	margin: 6px 3px 3px 0;
 }
 #queue{
 	width: 300px;
 	margin-left: 6px;
-	margin: 6px 0 0 3px;
 }
 #projectlist{
 	width: 500px;
 }
-#singleproject{
+#singleproject-row{
+	margin-top: 3px;
+	margin-bottom: 0;
+}
+#singleprojectinfo{
+	margin: 3px 3px 3px 0;
 	-webkit-box-flex: 1;
-	margin: 6px 3px 3px 0;
 }
 #register_div{
 	border: 1px solid #000;
@@ -164,26 +144,33 @@ footer{
 	text-align: left;
 }
 #disclaimer{
-	font-size: 2.05em;
+	font-size: 1.05em;
 }
 #topView{
-	-webkit-box-flex: 1;
+	margin-top: 3px;
 }
 #view34{
-	-webkit-box-flex: 1;
+	margin-right: 0;
+	margin-top: 3px;
 }
 #leftView{
-	-webkit-box-flex: 1;
+	margin-left: 0;
+	margin-top: 0px;
 }
 #frontView{
-	-webkit-box-flex: 1;
+	margin-top: 0px;
 }
 #rightView{
+	margin-right: 0;
+	margin-top: 0px;
+}
+.modelview{
 	-webkit-box-flex: 1;
+	margin: 3px;
 }
 .box{
-	display: box;
 	display: -webkit-box;
+	display: box;
 	display: -moz-box;
 }
 .horizontal{
@@ -195,20 +182,11 @@ footer{
 .fill{
 	-webkit-box-flex: 1;
 }
-.left{
-	padding-left: 3px;
-}
-.right{
-	padding-right: 3px;
-}
 .center{
 	margin: 0 auto;
 }
-.clear{
-	clear: both;
-}
-.padding-right{
-	padding-right: 3px;
+.center-all{
+	-webkit-box-pack: center;
 }
 .dropdown{
 	border-radius: 3px;
@@ -253,17 +231,10 @@ footer{
 	margin-top: 3px;
 	padding: 100px 20px 100px 20px;
 	width: 500px;
-	display: box;
-	display: -webkit-box;
-	display: -moz-box;
-	-webkit-box-orient: center;
+	
 }
 .form{
-	width: 300px;
-	margin: 0 auto;
-	text-align: center;
-	display: table-cell;
-	vertical-align: middle;
+	
 }
 .textbox{
 	border-radius: 3px;
@@ -284,14 +255,18 @@ footer{
 .errorlist{
 	color: red;
 }
-.flashes{
+.flash-box{
 	max-width: 1000px;
 	border-radius: 0 0 6px 6px;
 	position: absolute;
-	left: 0px;
+	margin-left: 30px;
+}
+.flash{
+	
 }
 .info{
 	background-color: #e0e0e0;
+	border: 2px solid #e0e0e0;
 	color: #111;
 	padding: 3px;
 	width: 100%;
@@ -299,6 +274,7 @@ footer{
 }
 .success{
 	background-color: #d5ffd5;
+	border: 2px solid green;
 	color: green;
 	padding: 3px;
 	width: 100%;
@@ -306,6 +282,7 @@ footer{
 }
 .warning{
 	background-color: #e0e0e0;
+	border: 2px solid #e0e0e0;
 	color: red;
 	padding: 3px;
 	width: 100%;
@@ -313,6 +290,7 @@ footer{
 }
 .error{
 	background-color: #ffbfbf;
+	border: 2px solid #ffbfbf;
 	color: red;
 	padding: 3px;
 	width: 100%;

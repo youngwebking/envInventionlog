@@ -2,9 +2,8 @@
 {% block extrahead %}
 {% endblock %}
 {% block content %}
-<ul class="box horizontal">
-	<li>
-   <div id="singleproject" class="container box">
+<div id="singleproject-row" class="horizontal box">
+   <div id="singleprojectinfo" class="container box">
       <h3>{{ project }}: {{ project.percent_complete }}% Complete</h3>
       <p>Status: {{ project.get_status_display }}(
       {% if not project.accepted %}
@@ -32,7 +31,7 @@
 		   <p>Drafts: {% if project.draftApproved == True %}Approved{% endif %}</p>
 		   <p>Stl File: {% if project.stl != None %}<a href="{{ project.stl.stl.url }}">download</a>{% else %}None{% endif %}</p>
 		   <p>Dxf File: {% if project.dxf != None %}<a href="{{ project.dxf.dxf.url }}">download</a>{% else %}None{% endif %}</p>
-		   <hr />
+		   <br />
 		   <p>Model Images: {% if project.modelApproved %}Approved{% endif %}</p>
 		   
 		   {% if project.draftsman.username == user.username %}
@@ -74,48 +73,41 @@
 			{% endif %}
       {% endif %}
    </div>
-   </li>
-   <li>
-   <div id="topView" class="container box">
+
+   <div id="topView" class="container box modelview">
    	<p>Model Top View: {% if project.modelImgTop.image.url != None %}
    		<a href="{{ project.modelImgTop.image.url }}"><br />
    		<img height="100px" src="{{ project.modelImgTop.image.url }}" /></a>
    	{% else %}None{% endif %}</p>
    </div>
-   </li>
-	<li>
-	<div id="view34" class="container box">
+
+	<div id="view34" class="container box modelview">
 		<p>Model 3/4 View: {% if project.modelImg34.image.url != None %}
 			<a href="{{ project.modelImg34.image.url }}"><br />
 			<img height="100px" src="{{ project.modelImg34.image.url }}" /></a>
 		{% else %}None{% endif %}</p>
 	</div>
-	</li>
-</ul>
-<ul class="box horizontal">
-	<li>
-	<div id="leftView" class="container box">
+</div>
+<div id="singleproject-row" class="horizontal box">
+	<div id="leftView" class="container box modelview">
 		<p>Model Left View: {% if project.modelImgLeft.image.url != None %}
 			<a href="{{ project.modelImgLeft.image.url }}"><br />
 			<img height="100px" src="{{ project.modelImgLeft.image.url }}" /></a>
 		{% else %}None{% endif %}</p>
 	</div>
-	</li>
-	<li>
-	<div id="frontView" class="container box">
+
+	<div id="frontView" class="container box modelview">
 		<p>Model Front View: {% if project.modelImgFront.image.url != None %}
 			<a href="{{ project.modelImgFront.image.url }}"><br />
 			<img height="100px" src="{{ project.modelImgFront.image.url }}" /></a>
 		{% else %}None{% endif %}</p>
 	</div>
-	</li>
-	<li>
-	<div id="rightView" class="container box">
+
+	<div id="rightView" class="container box modelview">
 		<p>Model Right View: {% if project.modelImgRight.image.url != None %}
 			<a href="{{ project.modelImgRight.image.url }}"><br />
 			<img height="100px" src="{{ project.modelImgRight.image.url }}" /></a>
 		{% else %}None{% endif %}</p>
 	</div>
-</ul>
 </div>
 {% endblock %}
