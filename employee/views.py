@@ -156,7 +156,7 @@ def SpecificManager(request, username):
 	try:
 		employee = Employee.objects.get(username=username)
 		manager = Manager.objects.get(username=username)
-		context = {'manager': manager}
+		context = {'manager': manager, 'employee': employee}
 	except:
 		messages.error(request, 'That manager does not exist!')
 		raise Http404("That manager does not exist!")
@@ -219,7 +219,7 @@ def SpecificDraftsman(request, username):
 		employee = Employee.objects.get(username=username)
 		draftsman = Draftsman.objects.get(username=username)
 		projects = Project.objects.filter(draftsman=draftsman.id)
-		context = {'draftsman': draftsman, 'projects': projects}
+		context = {'draftsman': draftsman, 'projects': projects, 'employee': employee}
 	except:
 		messages.error(request, 'That draftsman does not exist!')
 		raise Http404("That draftsman does not exist!")
@@ -236,7 +236,7 @@ def SpecificMT(request, username):
 		employee = Employee.objects.get(username=username)
 		mt = MachineTechnician.objects.get(username=username)
 		projects = Project.objects.filter(machineTech=mt.id)
-		context = {'mt': mt, 'projects': projects}
+		context = {'mt': mt, 'projects': projects, 'employee': employee}
 	except:
 		messages.error(request, 'That Machine Technician does not exist!')
 		raise Http404("That Machine Technician does not exist!")
@@ -253,7 +253,7 @@ def SpecificMB(request, username):
 		employee = Employee.objects.get(username=username)
 		mb = ModelBuilder.objects.get(username=username)
 		projects = Project.objects.filter(modelBuilder=mb.id)
-		context = {'mb': mb, 'projects': projects}
+		context = {'mb': mb, 'projects': projects, 'employee': employee}
 	except:
 		messages.error(request, 'That Model Builder does not exist!')
 		raise Http404("That Model Builder does not exist!")

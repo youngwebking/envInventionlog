@@ -8,23 +8,23 @@
 	<ol>
 	<li><div class="register_div left">
 		<!--{#% if form.name.errors %}<p class="form-error">{{ form.name.errors }}</p>{#% endif %}-->
-		<p><label for="name"{% if form.name.errors %} class="form-error"{% endif %}>Name:</label></p>
+		<p><label for="name"{% if form.name.errors %} class="form-error"{% endif %}>Name:*</label></p>
 		<p>{{ form.name }}</p>
 	</div></li>
 	<li><div class="register_div left">
-		<p><label for="email"{% if form.email.errors %} class="form-error"{% endif %}>Email:</label></p>
+		<p><label for="email"{% if form.email.errors %} class="form-error"{% endif %}>Email:*</label></p>
 		<p>{{ form.email }}</p>
 	</div></li>
 	<li><div class="register_div left">
-		<p><label for="job"{% if form.job.errors %} class="form-error"{% endif %}>Job:</label></p>
+		<p><label for="job"{% if form.job.errors %} class="form-error"{% endif %}>Job:*</label></p>
 		<p>{{ form.job }}</p>
 	</div></li>
 	<li><div class="register_div left">
-		<p><label for="question"{% if form.question.errors %} class="form-error"{% endif %}>Security Question:</label></p>
+		<p><label for="question"{% if form.question.errors %} class="form-error"{% endif %}>Security Question:*</label></p>
 		<p>{{ form.question }}</p>
 	</div></li>
 	<li><div class="register_div left">
-		<p><label for="answer"{% if form.answer.errors %} class="form-error"{% endif %}>Answer:</label></p>
+		<p><label for="answer"{% if form.answer.errors %} class="form-error"{% endif %}>Answer:*</label></p>
 		<p>{{ form.answer }}</p>
 	</div></li>
 	<li><div class="register_div left">

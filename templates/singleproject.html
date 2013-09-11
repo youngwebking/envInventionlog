@@ -3,20 +3,30 @@
 {% endblock %}
 {% block content %}
 <div id="singleproject-row" class="horizontal box">
-   <div id="singleprojectinfo" class="container box">
-      <h3>{{ project }}: {{ project.percent_complete }}% Complete</h3>
-      <p>Status: {{ project.get_status_display }}(
+	<div id="singleprojectinfo" class="container box">
+		<h3>{{ project }}: {{ project.percent_complete }}% Complete</h3>
+		<p>{% if project.status == 'I' or project.status == 'C' %}<b class="green">{% elif project.status == 'P' %}<b class="red">{% endif %}Status:</b> {{ project.get_status_display }}(
       {% if not project.accepted %}
-      	{{ project.productionManager.name }}
+      	{% if project.productionManager.username == user.username %}<b class="red">{% endif %}
+      			{{ project.productionManager.name }}
+      			</b>
       {% else %}
       	{% if project.stl == None or project.dxf == None %}
-      		{{ project.draftsman.name }}
+      		{% if project.draftsman.username == user.username %}<b class="red">{% endif %}
+      			{{ project.draftsman.name }}
+      			</b>
       	{% elif project.stl != None and project.dxf != None and project.draftApproved != True %}
-      		{{ project.productionManager.name }}
+      		{% if project.productionManager.username == user.username %}<b class="red">{% endif %}
+      			{{ project.productionManager.name }}
+      			</b>
       	{% elif project.modelImgTop == None or project.modelImg34 == None or project.modelImgFront == None or project.modelImgRight == None %}
-      		{{ project.modelbuilder.name }}
+      		{% if project.modelBuilder.username == user.username %}<b class="red">{% endif %}
+      			{{ project.modelBuilder.name }}
+      			</b>
       	{% elif project.modelImgTop != None and project.modelImg34 != None and project.modelImgFront != None and project.modelImgRight != None and project.modelApproved != True %}
-      		{{ project.productionManager.name }}
+      		{% if project.productionManager.username == user.username %}<b class="red">{% endif %}
+      			{{ project.productionManager.name }}
+      			</b>
       	{% endif %}
 		{% endif %}      
       )</p>
@@ -28,11 +38,11 @@
 		   <p>Project model builder: {% if project.modelBuilder != None %}<a href="/employees/model-builders/{{ project.modelBuilder.slug }}">{{ project.modelBuilder }}</a>{% else %}None{% endif %}</p>
 		   <p>Patent Image: {% if project.patentImage1.url != None %}<a href="{{ project.patentImage1.url }}">{{ project.patentImage1.url }}</a>{% else %}None{% endif %}</p>
 		   <br />
-		   <p>Drafts: {% if project.draftApproved == True %}Approved{% endif %}</p>
+		   <p>{% if project.draftApproved %}<b class="green">{% elif project.stl == None or project.dxf == None %}<b class="red">{% endif %}Drafts:</b>{% if project.draftApproved %} Approved{% endif %}</p>
 		   <p>Stl File: {% if project.stl != None %}<a href="{{ project.stl.stl.url }}">download</a>{% else %}None{% endif %}</p>
 		   <p>Dxf File: {% if project.dxf != None %}<a href="{{ project.dxf.dxf.url }}">download</a>{% else %}None{% endif %}</p>
 		   <br />
-		   <p>Model Images: {% if project.modelApproved %}Approved{% endif %}</p>
+		   <p{% if project.modelApproved %} class="green"{% endif %}>Model Images: {% if project.modelApproved %}Approved{% endif %}</p>
 		   
 		   {% if project.draftsman.username == user.username %}
 		   	<form enctype="multipart/form-data">
