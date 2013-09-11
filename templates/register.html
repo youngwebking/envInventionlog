@@ -33,8 +33,12 @@
 	</div></li>
 	<li>
 		<br />
-		<p><!--<a href="/terms">--><a href="#" onclick="show_terms()">Terms of Agreement</a></p>
-		<p><!--<a href="/terms">--><a href="#" onclick="PopUp()">Terms of Agreement</a></p>
+		<p>
+			Terms of Agreement
+			<a href="#" onclick="show_terms()">(alert)</a>
+			<a href="#" onclick="ShowTermsPopUp()">(new window)</a>
+		</p>
+		<br />
 		<p><!--{{ form.agree }}--> Clicking the Submit button means you agree to the above terms.</p>
 	</li>
 	<li><p><input type="submit" value="Submit!" class="btn btn-large btn-primary"></p></li>

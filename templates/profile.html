@@ -12,7 +12,7 @@
 		{% endif %}
 		{% if user.employee.username == employee.username %}
 			<label for="status">Status: </label>
-			<select name="status" class="dropdown">
+			<select name="status" class="dropdown" onchange="SetStatus()">
 			  <option value="Available">Available</option>
 			  <option value="Unavailable">Unavailable</option>
 			</select>

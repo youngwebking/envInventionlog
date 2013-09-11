@@ -3,6 +3,7 @@
 	margin: 0px;
 	font-family: ubuntu;
 	text-align: left;
+	outline: none;
 	-webkit-box-flex: 0;
 	-webkit-box-orient: vertical;
 }
@@ -164,6 +165,16 @@ footer{
 	margin-right: 0;
 	margin-top: 0px;
 }
+#toolbox{
+	margin-top: -2px;
+	padding: 0;
+	height: 28px;
+	/*background: url(/static/img/new_dropdown_arrow.png) no-repeat right #fff;*/
+}
+.nav-dropdown{
+	margin-top: -2px;
+	padding: 0;
+}
 .modelview{
 	-webkit-box-flex: 1;
 	margin: 3px;
@@ -196,6 +207,13 @@ footer{
 	margin: 3px;
 	background-color: #fff;
 }
+.bottom-round{
+	border-radius: 3px;
+}
+.background{
+	background-color: black;
+	border: 3px solid green;
+}
 .nav-button{
 	border-radius: 6px;
 	border: 1px solid #999;
@@ -208,21 +226,21 @@ footer{
 }
 .btn{
 	border-radius: 3px;
-	background-color: #999;
+	border: 1px solid #000;
 	background-color: #999;
 	padding: 3px;
 	margin-top: 10px;
-	height: 20px;
 }
 .btn-large{
 	height: 40px;
+	padding: 6px;
 }
 .btn-primary{
 	background-color: #000;
 	color: #999;
 	font-size: 1.5em;
-	display: inline-block;
 	border-radius: 10px;
+	border: 1px solid #999;
 }
 .form-container{
 	background-color: #e0e0e0;
