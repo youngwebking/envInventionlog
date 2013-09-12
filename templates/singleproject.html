@@ -2,7 +2,7 @@
 {% block extrahead %}
 {% endblock %}
 {% block content %}
-<div id="singleproject-row" class="horizontal box">
+
 	<div id="singleprojectinfo" class="container box">
 		<h3>{{ project }}: {{ project.percent_complete }}% Complete</h3>
 		<p>{% if project.status == 'I' or project.status == 'C' %}<b class="green">{% elif project.status == 'P' %}<b class="red">{% endif %}Status:</b> {{ project.get_status_display }}(
@@ -48,7 +48,53 @@
 			</div>
 		<h3>Model</h3>
 			<div>
-		   <p{% if project.modelApproved %} class="green"{% endif %}>Model Images: {% if project.modelApproved %}Approved{% endif %}</p>
+			<div id="singleproject-row" class="horizontal box">
+		   <div class="fill"></div>
+		   {% if project.modelImgTop != None %}
+				<div id="topView" class="container box modelview">
+					<p>Model Top View: {% if project.modelImgTop.image.url != None %}
+						<a href="{{ project.modelImgTop.image.url }}"><br />
+						<img height="100px" src="{{ project.modelImgTop.image.url }}" /></a>
+					{% else %}None{% endif %}</p>
+				</div>
+			{% endif %}
+			{% if project.modelImg34 != None %}
+				<div id="view34" class="container box modelview">
+					<p>Model 3/4 View: {% if project.modelImg34.image.url != None %}
+						<a href="{{ project.modelImg34.image.url }}"><br />
+						<img height="100px" src="{{ project.modelImg34.image.url }}" /></a>
+					{% else %}None{% endif %}</p>
+				</div>
+			</div>
+			{% endif %}
+			{% if project.modelImgLeft != None %}
+			<div id="singleproject-row" class="horizontal box">
+				<div id="leftView" class="container box modelview">
+					<p>Model Left View: {% if project.modelImgLeft.image.url != None %}
+						<a href="{{ project.modelImgLeft.image.url }}"><br />
+						<img height="100px" src="{{ project.modelImgLeft.image.url }}" /></a>
+					{% else %}None{% endif %}</p>
+				</div>
+			{% else %}
+				<div class="fill"></div>
+			{% endif %}
+			{% if project.modelImgFront != None %}
+				<div id="frontView" class="container box modelview">
+					<p>Model Front View: {% if project.modelImgFront.image.url != None %}
+						<a href="{{ project.modelImgFront.image.url }}"><br />
+						<img height="100px" src="{{ project.modelImgFront.image.url }}" /></a>
+					{% else %}None{% endif %}</p>
+				</div>
+			{% endif %}
+			{% if project.modelImgRight != None %}
+				<div id="rightView" class="container box modelview">
+					<p>Model Right View: {% if project.modelImgRight.image.url != None %}
+						<a href="{{ project.modelImgRight.image.url }}"><br />
+						<img height="100px" src="{{ project.modelImgRight.image.url }}" /></a>
+					{% else %}None{% endif %}</p>
+				</div>
+			{% endif %}
+			</div>
 		</div>
 		<h3>Edit</h3>
 			<div>
@@ -81,47 +127,4 @@
       	<div>
       </div>
    </div>
-{% if project.modelImgTop != None %}
-   <div id="topView" class="container box modelview">
-   	<p>Model Top View: {% if project.modelImgTop.image.url != None %}
-   		<a href="{{ project.modelImgTop.image.url }}"><br />
-   		<img height="100px" src="{{ project.modelImgTop.image.url }}" /></a>
-   	{% else %}None{% endif %}</p>
-   </div>
-{% endif %}
-{% if project.modelImg34 != None %}
-	<div id="view34" class="container box modelview">
-		<p>Model 3/4 View: {% if project.modelImg34.image.url != None %}
-			<a href="{{ project.modelImg34.image.url }}"><br />
-			<img height="100px" src="{{ project.modelImg34.image.url }}" /></a>
-		{% else %}None{% endif %}</p>
-	</div>
-</div>
-{% endif %}
-{% if project.modelImgLeft != None %}
-<div id="singleproject-row" class="horizontal box">
-	<div id="leftView" class="container box modelview">
-		<p>Model Left View: {% if project.modelImgLeft.image.url != None %}
-			<a href="{{ project.modelImgLeft.image.url }}"><br />
-			<img height="100px" src="{{ project.modelImgLeft.image.url }}" /></a>
-		{% else %}None{% endif %}</p>
-	</div>
-{% endif %}
-{% if project.modelImgFront != None %}
-	<div id="frontView" class="container box modelview">
-		<p>Model Front View: {% if project.modelImgFront.image.url != None %}
-			<a href="{{ project.modelImgFront.image.url }}"><br />
-			<img height="100px" src="{{ project.modelImgFront.image.url }}" /></a>
-		{% else %}None{% endif %}</p>
-	</div>
-{% endif %}
-{% if project.modelImgRight != None %}
-	<div id="rightView" class="container box modelview">
-		<p>Model Right View: {% if project.modelImgRight.image.url != None %}
-			<a href="{{ project.modelImgRight.image.url }}"><br />
-			<img height="100px" src="{{ project.modelImgRight.image.url }}" /></a>
-		{% else %}None{% endif %}</p>
-	</div>
-{% endif %}
-</div>
 {% endblock %}
