@@ -10,9 +10,13 @@
 	<ol>
 		<li><p {% if form.topView.errors %}class="error"{% endif %}>Top View File: {{ form.topView }} {{ form.topView.errors }}</p></li>
 		
-		<li><p {% if form.rightView.errors %}class="error"{% endif %}>Right View: {{ form.rightView }} {{ form.rightView.errors }}</p></li>
+		<li><p {% if form.View34.errors %}class="error"{% endif %}>3/4 View File: {{ form.View34 }} {{ form.View34.errors }}</p></li>
+		
+		<li><p {% if form.leftView.errors %}class="error"{% endif %}>Left View: {{ form.leftView }} {{ form.leftView.errors }}</p></li>
 		
 		<li><p {% if form.frontView.errors %}class="error"{% endif %}>Front View: {{ form.frontView }} {{ form.frontView.errors }}</p></li>
+		
+		<li><p {% if form.rightView.errors %}class="error"{% endif %}>Right View: {{ form.rightView }} {{ form.rightView.errors }}</p></li>
 		<br />
 		
 		<li><input type="submit" value="Submit!" class="btn btn-large btn-primary"></li>

@@ -45,20 +45,57 @@ def upload_model(request, projectslug):
 			if request.method == 'POST':
 				form = UploadModelForm(request.POST, request.FILES)
 				if form.is_valid():
-					newtop = Image(image=request.FILES['topView'])
-					newtop.save()
+					try:
+						newtop = Image(image=request.FILES['topView'])
+						newtop.save()
+					except:
+						pass
+						
+					try:
+						new34 = Image(image=request.FILES['View34'])
+						new34.save()
+					except:
+						pass
 					
-					newright = Image(image=request.FILES['rightView'])
-					newright.save()
+					try:
+						newleft = Image(image=request.FILES['leftView'])
+						newleft.save()
+					except:
+						pass
 					
-					frontname = form.cleaned_data['frontView']
-					newfront = Image(image=request.FILES['frontView'])
-					newfront.save()
+					try:
+						newfront = Image(image=request.FILES['frontView'])
+						newfront.save()
+					except:
+						pass
+					
+					try:
+						newright = Image(image=request.FILES['rightView'])
+						newright.save()
+					except:
+						pass
 					
 					project = Project.objects.get(slug=projectslug)
-					project.modelImgTop = newtop
-					project.modelImgRight = newright
-					project.modelImgFront = newfront
+					try:
+						project.modelImgTop = newtop
+					except:
+						pass
+					try:
+						project.modelImg34 = new34
+					except:
+						pass
+					try:
+						project.modelImgLeft = newleft
+					except:
+						pass
+					try:
+						project.modelImgFront = newfront
+					except:
+						pass
+					try:
+						project.modelImgRight = newright
+					except:
+						pass
 					project.save()
 					return HttpResponseRedirect('/projects/' + projectslug + '/')
 				else:
