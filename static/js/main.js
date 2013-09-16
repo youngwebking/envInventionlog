@@ -33,7 +33,6 @@ function Calendar(){
    alert("Calendar!");
 }
 
-function SetStatus(){
-	var selection = document.getElementByName("status");
-	this.form.submit();
-}
+
+
+

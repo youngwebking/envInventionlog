@@ -1,0 +1,17 @@
+COPYING
+MANIFEST.in
+README
+setup.cfg
+static.py
+pip-egg-info/static.egg-info/PKG-INFO
+pip-egg-info/static.egg-info/SOURCES.txt
+pip-egg-info/static.egg-info/dependency_links.txt
+pip-egg-info/static.egg-info/entry_points.txt
+pip-egg-info/static.egg-info/requires.txt
+pip-egg-info/static.egg-info/top_level.txt
+testdata/priv/foo.txt
+testdata/pub/favicon.ico
+testdata/pub/index.html
+testdata/pub/kid.html.kid
+testdata/pub/sub.html.stp
+testdata/pub/test.xml

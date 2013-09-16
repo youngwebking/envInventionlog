@@ -1,3 +1,5 @@
 employee/test.py
 project/test.py
 static_pages/test.py
+ENV
+*.pyc

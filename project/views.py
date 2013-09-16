@@ -5,6 +5,7 @@ from django.template import RequestContext
 from django.template.defaultfilters import slugify
 from project.models import Project, Stl, Dxf, Image
 from project.forms import UploadDraftForm, UploadModelForm
+from employee.helpers import get_random_employee, get_next_employee
 
 # UPLOAD DRAFT FILES------------------------------------------------------------------
 def upload_draft(request, projectslug):
@@ -115,7 +116,10 @@ def upload_model(request, projectslug):
 def AcceptProject(request, projectslug):
 	project = Project.objects.get(slug=projectslug)
 	if request.user.username == project.productionManager.username:
-		project.accept_project()
+		d = get_next_employee('D')
+		t = get_next_employee('T')
+		b = get_next_employee('B')
+		project.accept_project(d, t, b)
 		return HttpResponseRedirect('/projects/' + projectslug + '/')
 	else:
 		return HttpResponseRedirect('/')
@@ -129,6 +133,15 @@ def ApproveDraft(request, projectslug):
 	else:
 		return HttpResponseRedirect('/')
 
+# APPROVE PROTOTYPE---------------------------------------------------------------------------------------------
+def ApprovePrototype(request, projectslug):
+	project = Project.objects.get(slug=projectslug)
+	if request.user.username == project.productionManager.username:
+		project.approve_prototype()
+		return HttpResponseRedirect('/projects/' + projectslug + '/')
+	else:
+		return HttpResponseRedirect('/')
+		
 # APPROVE MODELS---------------------------------------------------------------------------------------------
 def ApproveModel(request, projectslug):
 	project = Project.objects.get(slug=projectslug)
@@ -137,6 +150,16 @@ def ApproveModel(request, projectslug):
 		return HttpResponseRedirect('/projects/' + projectslug + '/')
 	else:
 		return HttpResponseRedirect('/')
+		
+# APPROVE ENTIRE PROJECT---------------------------------------------------------------------------------------------
+def FinalApprove(request, projectslug):
+	project = Project.objects.get(slug=projectslug)
+	if request.user.username == project.productionManager.username:
+		project.final_approve()
+		return HttpResponseRedirect('/projects/' + projectslug + '/')
+	else:
+		return HttpResponseRedirect('/')
+		
 # PROJECTS-------------------------------------
 def ProjectsAll(request):
 	projects = Project.objects.all()

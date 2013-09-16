@@ -122,7 +122,6 @@ def Login(request, username):
 				if employee is not None:
 					login(request, employee)
 					if employee.is_authenticated:
-						#return HttpResponseRedirect("/profile/")
 						profile = get_profile_link(request)
 						messages.add_message(request, messages.SUCCESS, 'You have been successfully logged in!')
 						return HttpResponseRedirect(get_profile_link(request))
@@ -175,6 +174,7 @@ def SpecificPM(request, username):
 		all_projects = Project.objects.filter(productionManager=pm.id)
 		pending_projects = all_projects.filter(accepted=False)
 		projects = all_projects.filter(accepted=True)
+		projects = projects.filter(finalApproved=False)
 	except:
 		messages.error(request, 'That production manager does not exist!')
 		raise Http404("That production manager does not exist!")
@@ -183,19 +183,22 @@ def SpecificPM(request, username):
 			try:
 				conn = MySQLdb.connect('localhost', 'root', 'chewy')
 				with conn:
-					cur = conn.cursor()
-					cur.execute("USE projects")
-					cur.execute("SELECT project_name FROM projects WHERE assigned='False'")
-					result = cur.fetchone()
-					project_name = `result`[2:-3]
-					cur.execute("SELECT patent_number FROM projects WHERE project_name='" + project_name + "'")
-					result2 = cur.fetchone()
-					patent_number = `result2`[1:-3]
-					cur.execute ("UPDATE projects SET assigned='True' WHERE project_name='%s' " % (project_name))
+					try:
+						cur = conn.cursor()
+						cur.execute("USE projects")
+						cur.execute("SELECT project_name FROM projects WHERE assigned='False'")
+						result = cur.fetchone()
+						project_name = `result`[2:-3]
+						cur.execute("SELECT patent_number FROM projects WHERE project_name='" + project_name + "'")
+						result2 = cur.fetchone()
+						patent_number = `result2`[1:-3]
+						cur.execute ("UPDATE projects SET assigned='True' WHERE project_name='%s' " % (project_name))
 					
-					slug = slugify(project_name)
-					project = Project(name=project_name, slug=slug, number=patent_number, status="P", productionManager=pm)
-					project.save()
+						slug = slugify(project_name)
+						project = Project(name=project_name, slug=slug, number=patent_number, status="P", productionManager=pm)
+						project.save()
+					except ValueError:
+						messages.add_message(request, messages.ERROR, 'There are no more unused projects in the database.')
 			
 			except _mysql.Error, e:
 			  	print "Error %d: %s" % (e.args[0], e.args[1])
@@ -219,6 +222,8 @@ def SpecificDraftsman(request, username):
 		employee = Employee.objects.get(username=username)
 		draftsman = Draftsman.objects.get(username=username)
 		projects = Project.objects.filter(draftsman=draftsman.id)
+		projects = projects.filter(accepted=True)
+		projects = projects.filter(finalApproved=False)
 		context = {'draftsman': draftsman, 'projects': projects, 'employee': employee}
 	except:
 		messages.error(request, 'That draftsman does not exist!')
@@ -236,6 +241,8 @@ def SpecificMT(request, username):
 		employee = Employee.objects.get(username=username)
 		mt = MachineTechnician.objects.get(username=username)
 		projects = Project.objects.filter(machineTech=mt.id)
+		projects = projects.filter(accepted=True)
+		projects = projects.filter(finalApproved=False)
 		context = {'mt': mt, 'projects': projects, 'employee': employee}
 	except:
 		messages.error(request, 'That Machine Technician does not exist!')
@@ -253,17 +260,25 @@ def SpecificMB(request, username):
 		employee = Employee.objects.get(username=username)
 		mb = ModelBuilder.objects.get(username=username)
 		projects = Project.objects.filter(modelBuilder=mb.id)
+		projects = projects.filter(accepted=True)
+		projects = projects.filter(finalApproved=False)
 		context = {'mb': mb, 'projects': projects, 'employee': employee}
 	except:
 		messages.error(request, 'That Model Builder does not exist!')
 		raise Http404("That Model Builder does not exist!")
 	return render_to_response('singlemb.html', context, context_instance=RequestContext(request))
 	
-	
-
-
-
-
+# CHANGE STATUS--------------------------------------------------------------------
+def ChangeStatus(request, username):
+	employees = Employee.objects.all()
+	employee = employees.get(username=username)
+	if employee.status == 'A':
+		employee.status = 'U'
+		employee.save()
+	else:
+		employee.status = 'A'
+		employee.save()
+	return HttpResponseRedirect(get_profile_link(request))
 
 
 	

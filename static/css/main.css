@@ -165,11 +165,18 @@ footer{
 	margin-right: 0;
 	margin-top: 0px;
 }
+#exampleView{
+	margin-top: 3px;
+	margin-left: 0;
+	margin-right: 7px;
+}
+#model-images{
+	max-height: calc(400px);
+}
 #toolbox{
 	margin-top: -2px;
 	padding: 0;
 	height: 28px;
-	/*background: url(/static/img/new_dropdown_arrow.png) no-repeat right #fff;*/
 }
 .nav-dropdown{
 	margin-top: -2px;
@@ -178,6 +185,10 @@ footer{
 .modelview{
 	-webkit-box-flex: 1;
 	margin: 3px;
+}
+.thumb{
+	max-width: 100px;
+	max-height: 100px;
 }
 .box{
 	display: -webkit-box;
@@ -230,6 +241,7 @@ footer{
 	background-color: #999;
 	padding: 3px;
 	margin-top: 10px;
+	cursor: pointer;
 }
 .btn-large{
 	height: 40px;
@@ -278,6 +290,7 @@ footer{
 	border-radius: 0 0 6px 6px;
 	position: absolute;
 	margin-left: 30px;
+	box-shadow: 2px 2px 3px #888888;
 }
 .flash{
 	
@@ -314,7 +327,7 @@ footer{
 }
 .error{
 	background-color: #ffbfbf;
-	border: 2px solid #ffbfbf;
+	border: 2px solid red;
 	color: red;
 	padding: 3px;
 	width: 100%;
@@ -323,7 +336,13 @@ footer{
 .inactive{
 	color: gray;
 }
-
+.vortex{
+	background-color: #e0e0e0;
+	border-radius: 6px;
+	margin-right: 6px;
+	margin-top: 3px;
+	padding: 20px 10px 20px 10px;
+}
 
 
 

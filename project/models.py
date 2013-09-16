@@ -1,5 +1,4 @@
 from django.db import models
-from project import helpers
 from django.core.files.storage import FileSystemStorage
 
 PATENTS  = "pics/patents"
@@ -32,6 +31,17 @@ class Project(models.Model):
 	#draftUploadDate3 = models.DateField(auto_now=True, auto_now_add=False, blank=True, null=True)
 	#draftApproveDate3 = models.DateField(auto_now=True, auto_now_add=False, blank=True, null=True)
 	
+	#prototypeUploadDate = models.DateField(auto_now=True, auto_now_add=False, blank=True, null=True)
+	#prototypeApproveDate = models.DateField(auto_now=True, auto_now_add=False, blank=True, null=True)
+	#prototypeRejectDate = models.DateField(auto_now=True, auto_now_add=False, blank=True, null=True)
+	
+	#prototypeUploadDate2 = models.DateField(auto_now=True, auto_now_add=False, blank=True, null=True)
+	#prototypeApproveDate2 = models.DateField(auto_now=True, auto_now_add=False, blank=True, null=True)
+	#prototypeRejectDate2 = models.DateField(auto_now=True, auto_now_add=False, blank=True, null=True)
+	
+	#prototypeUploadDate3 = models.DateField(auto_now=True, auto_now_add=False, blank=True, null=True)
+	#prototypeApproveDate3 = models.DateField(auto_now=True, auto_now_add=False, blank=True, null=True)
+	
 	#modelUploadDate = models.DateField(auto_now=True, auto_now_add=False, blank=True, null=True)
 	#modelApproveDate = models.DateField(auto_now=True, auto_now_add=False, blank=True, null=True)
 	#modelRejectDate = models.DateField(auto_now=True, auto_now_add=False, blank=True, null=True)
@@ -62,9 +72,14 @@ class Project(models.Model):
 	percent_complete = models.IntegerField(default=0)
 	accepted = models.BooleanField()
 	draftApproved = models.BooleanField()
+	prototypeApproved = models.BooleanField()
 	modelApproved = models.BooleanField()
+	finalApproved = models.BooleanField()
 	
-	def accept_project(self):
+	def accept_project(self, d, t, b):
+		self.draftsman = d
+		self.machineTech = t
+		self.modelBuilder = b
 		self.accepted = True
 		self.status = 'I'
 		self.percent_complete = 1
@@ -72,11 +87,25 @@ class Project(models.Model):
 	
 	def approve_draft(self):
 		self.draftApproved = True
+		self.percent_complete = 25
+		self.save()
+		
+	def approve_prototype(self):
+		self.prototypeApproved = True
+		self.percent_complete = 50
 		self.save()
 		
 	def approve_model(self):
 		self.modelApproved = True
+		self.percent_complete = 75
 		self.save()
+		
+	def final_approve(self):
+		self.finalApproved = True
+		self.status = 'C'
+		self.percent_complete = 100
+		self.save()
+	
 	
 	def __unicode__(self):
 		return self.name
